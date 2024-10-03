@@ -1,0 +1,42 @@
+body {
+  margin: 0;
+  background-color: black;
+  color: white !important;
+}
+
+:is(ul, ul li) {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+img {
+  object-fit: contain;
+}
+
+input:focus {
+  outline: none;
+}
+
+:is(p, input) {
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background-color: white;
+}
+
+details summary {
+  list-style: none;
+}
+
+.container {
+  /* height: 100%; */
+  padding: 20px 50px 50px;
+  max-width: 1560px;
+  margin: 0 auto;
+}
+

@@ -1,0 +1,39 @@
+header {
+  background-color: rgb(23, 22, 124);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+
+  .content {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 50px;
+    height: 60px;
+    max-width: 1560px;
+    margin: 0 auto;
+  }
+
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+
+    a {
+      text-decoration: none;
+      color: white;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      transition: all 0.3s linear;
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+
+      &:hover {
+        border: 1px solid white;
+        border-radius: 10px;
+        transition: all 0.3s linear;
+      }
+    }
+  }
+}
