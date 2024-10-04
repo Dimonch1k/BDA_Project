@@ -4,6 +4,7 @@ import App from "../../App";
 import Home from "../Home";
 import Library from "../../components/library/Library";
 import Auth from "../../components/auth/Auth";
+import Login from "../../components/auth/Login";
 
 const router = createBrowserRouter([
   {
@@ -24,8 +25,12 @@ const router = createBrowserRouter([
         component: () => <h1>Book Page</h1>,
       },
       {
-        path: "/auth",
+        path: "/library/auth",
         element: <Auth />,
+      },
+      {
+        path: "/library/login",
+        element: <Login />,
       },
     ],
   },

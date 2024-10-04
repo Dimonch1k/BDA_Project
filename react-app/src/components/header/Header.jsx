@@ -14,7 +14,8 @@ const Header = () => {
             <House />
           </NavLink>
           <NavLink to="/library">Library</NavLink>
-          <NavLink to="/auth">Auth</NavLink>
+          <NavLink to="/library/auth">Auth</NavLink>
+          <NavLink to="/library/login">Login</NavLink>
         </nav>
 
         <Space size={"small"} style={{ marginLeft: "auto" }}>

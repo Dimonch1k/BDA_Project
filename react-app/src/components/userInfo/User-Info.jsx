@@ -12,7 +12,7 @@ const UserInfo = () => {
   return (
     <>
       <Button
-        type="primary"
+        type="default"
         shape="circle"
         onClick={showModal}
         icon={<UserOutlined />}
@@ -23,8 +23,8 @@ const UserInfo = () => {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <p>Name: John</p>
-        <p>Surname: Doe</p>
+        <p>First Name: John</p>
+        <p>Last Name: Doe</p>
         <p>Email: johnDoe@gmail.com</p>
         <p>Password: 1234</p>
       </Modal>
