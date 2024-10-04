@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/components/auth/Auth.scss";
+import "../../styles/components/auth/Reg-Log.scss";
 
 const Auth = () => {
   return (
