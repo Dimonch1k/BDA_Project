@@ -4,10 +4,37 @@ import { Space } from "antd";
 import UserInfo from "../userInfo/User-Info";
 
 import "../../styles/components/header/Header.scss";
+import { useEffect, useState } from "react";
 
 const Header = () => {
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  const controlHeader = () => {
+    if (typeof window !== "undefined") {
+      if (window.scrollY > lastScrollY) {
+        setIsVisible(false); // Scrolling down
+      } else {
+        setIsVisible(true); // Scrolling up
+      }
+      setLastScrollY(window.scrollY); // Update last scroll position
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", controlHeader);
+    return () => {
+      window.removeEventListener("scroll", controlHeader); // Cleanup the event listener
+    };
+  }, [lastScrollY]);
+
   return (
-    <header>
+    <header
+      style={{
+        transform: isVisible ? "translateY(0)" : "translateY(-100%)",
+        transition: "transform 0.3s ease",
+      }}
+    >
       <div className="content">
         <nav>
           <NavLink to="/">

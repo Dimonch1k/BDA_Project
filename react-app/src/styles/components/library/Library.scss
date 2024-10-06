@@ -1,0 +1,13 @@
+.catalog-settings {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 20px;
+}
+
+.book-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+    grid-gap: 10px;
+    grid-row-gap: 30px;
+}
