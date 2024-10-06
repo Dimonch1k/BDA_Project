@@ -5,6 +5,7 @@ import Home from "../Home";
 import Library from "../../components/library/Library";
 import Auth from "../../components/auth/Auth";
 import Login from "../../components/auth/Login";
+import BookPage from "../../components/library/Book-Page/BookPage";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/:id",
-        component: () => <h1>Book Page</h1>,
+        element: <BookPage />,
       },
       {
         path: "/library/auth",
