@@ -4,7 +4,7 @@ import { PlusCircleOutlined, UploadOutlined } from "@ant-design/icons";
 import { Formik, ErrorMessage, Form, Field } from "formik";
 import * as Yup from "yup";
 
-import "../../../styles/components/library/Add-Book/Add-Book.scss";
+import "../../../../styles/components/library/Add-Book/Add-Book.scss";
 import { useDispatch } from "react-redux";
 import { addBook } from "../../../../slices/booksSlice";
 
