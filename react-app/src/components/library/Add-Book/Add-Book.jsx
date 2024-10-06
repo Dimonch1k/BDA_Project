@@ -17,8 +17,6 @@ const AddBook = ({ addNewBook }) => {
     title: Yup.string().required("Title is required"),
     author: Yup.string().required("Author is required"),
     genre: Yup.string().required("Genre is required"),
-    pages: Yup.number().required("Number of pages is required"),
-    price: Yup.string().required("Price is required"),
   });
 
   return (
@@ -43,8 +41,6 @@ const AddBook = ({ addNewBook }) => {
             title: "",
             author: "",
             genre: "",
-            pages: "",
-            price: "",
           }}
           validationSchema={validationSchema}
           onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -102,27 +98,14 @@ const AddBook = ({ addNewBook }) => {
                 <ErrorMessage name="genre" component="div" className="error" />
               </div>
 
-              {/* Pages */}
+              {/* Description */}
               <div>
-                <label>Pages</label>
+                <label>Description</label>
                 <Input
-                  name="pages"
-                  type="number"
-                  min={0}
-                  onChange={(e) => setFieldValue("pages", e.target.value)}
+                  name="description"
+                  onChange={(e) => setFieldValue("description", e.target.value)}
                 />
-                <ErrorMessage name="pages" component="div" className="error" />
-              </div>
-
-              {/* Price */}
-              <div>
-                <label>Price</label>
-                <Input
-                  name="price"
-                  type="text"
-                  onChange={(e) => setFieldValue("price", e.target.value)}
-                />
-                <ErrorMessage name="price" component="div" className="error" />
+                <ErrorMessage name="description" component="div" className="error" />
               </div>
 
               {/* Submit Button */}

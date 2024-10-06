@@ -1,0 +1,66 @@
+// @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
+.book {
+  color: white;
+
+  &__info {
+
+  }
+
+  &__cover-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__cover {
+    width: 200px;
+    height: 300px;
+  }
+
+  &__title {
+    font-family: "Playfair Display", Times, serif;
+    font-weight: 700;
+    font-size: 24px;
+    text-align: center;
+    margin:5px 0;
+  }
+
+  &__author {
+    font-family: 'Lato', Arial, sans-serif;
+    font-style: italic;
+    font-size: 18px;
+  }
+
+  &__genre {
+    font-family: 'Raleway', Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+  }
+
+  &__description {
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 15px;
+  }
+
+  &__info {
+    padding: 15px 0; /* Space around the entire info section */
+  }
+  
+  &__info h2 {
+    margin-bottom: 10px; /* Space below the title */
+  }
+  
+  &__info p {
+    margin: 10px 0; /* Space between paragraphs */
+  }
+  
+  &__info p:not(:last-child) {
+    border-bottom: 1px solid #ccc; /* Light gray line for all but the last paragraph */
+    padding-bottom: 10px; /* Space between the text and the line */
+  }
+  
+}
