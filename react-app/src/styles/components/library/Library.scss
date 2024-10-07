@@ -12,3 +12,12 @@
   grid-gap: 20px;
   grid-row-gap: 30px;
 }
+
+.loading,
+.error {
+  font-size: 48px;
+}
+
+.error {
+  color: red;
+}

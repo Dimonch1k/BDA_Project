@@ -4,7 +4,10 @@ import Book from "./Book/Book";
 
 import "../../styles/components/library/Library.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchBooksItems } from "../../slices/booksSlice";
+import {
+  fetchBooksItems,
+  selectAllBooks,
+} from "../../store/slices/bookSlice.js";
 
 const sortingMap = {
   Title: (a, b) => a.title.localeCompare(b.title),
@@ -13,34 +16,21 @@ const sortingMap = {
 };
 
 const Library = () => {
-  const [books, setBooks] = useState(() => {
-    const savedBooks = localStorage.getItem("books");
-    return savedBooks ? JSON.parse(savedBooks) : [];
-  });
-
-  const [currentSort, setCurrentSort] = useState("Title");
-  const [currentSearch, setCurrentSearch] = useState("");
+  const dispatch = useDispatch();
+  const books = useSelector(selectAllBooks);
+  console.log(books);
+  const bookStatus = useSelector((state) => state.books.status);
+  const error = useSelector((state) => state.books.error);
 
   useEffect(() => {
-    const fetchBooks = async () => {
-      try {
-        const response = await fetch("https://freetestapi.com/api/v1/books");
-        const data = await response.json();
+    if (bookStatus === "idle") {
+      dispatch(fetchBooksItems());
+    }
+  }, [bookStatus, dispatch]);
 
-        const limitedBooks = data.slice(0, 10);
-        setBooks(limitedBooks);
-
-        localStorage.setItem("books", JSON.stringify(limitedBooks));
-      } catch (error) {
-        console.error("Error fetching books:", error);
-      }
-    };
-
-    fetchBooks();
-  }, []);
-
-  // console.log(Object.keys(currentSearch));
-  // console.log(currentSearch);
+  // Searching Book
+  const [currentSort, setCurrentSort] = useState("Title");
+  const [currentSearch, setCurrentSearch] = useState("");
 
   const searchTerm = String(currentSearch || "").toLowerCase();
 
@@ -62,22 +52,11 @@ const Library = () => {
     ));
   };
 
-  // const dispatch = useDispatch();
-  // const {
-  //   items: booksItems,
-  //   status,
-  //   error,
-  // } = useSelector((state) => state.books);
+  if (bookStatus === "loading")
+    return <div className="loading">Loading...</div>;
 
-  // useEffect(() => {
-  //   if (status === "idle") {
-  //     dispatch(fetchBooksItems());
-  //   }
-  // }, [status, dispatch]);
-
-  // if (status === "loading") return <div>Loading...</div>;
-
-  // if (status === "failed") return <div>Error: {error}</div>;
+  if (bookStatus === "failed")
+    return <div className="error">Error: {error}</div>;
 
   return (
     <>
@@ -88,7 +67,6 @@ const Library = () => {
           setCurrentSearch={setCurrentSearch}
           currentSort={currentSort}
         />
-
         <div className="book-list">{renderBooks()}</div>
       </div>
     </>
