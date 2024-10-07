@@ -1,23 +1,12 @@
 import React, { useState } from "react";
 import { Button, Modal, Input, Upload } from "antd";
 import { PlusCircleOutlined, UploadOutlined } from "@ant-design/icons";
-import { Formik, ErrorMessage, Form, Field } from "formik";
+import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 import "../../../styles/components/library/Add-Book/Add-Book.scss";
-import { useDispatch } from "react-redux";
-import { addBook } from "../../../../slices/booksSlice";
 
-const InputField = ({ label, name, ...props }) => (
-  <div>
-    <label>{label}</label>
-    <Field name={name} as={Input} {...props} />
-    <ErrorMessage name={name} component="div" className="error" />
-  </div>
-);
-
-const AddBook = () => {
-  const dispatch = useDispatch();
+const AddBook = ({ addNewBook }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => setIsModalOpen(true);
@@ -28,7 +17,6 @@ const AddBook = () => {
     title: Yup.string().required("Title is required"),
     author: Yup.string().required("Author is required"),
     genre: Yup.string().required("Genre is required"),
-    description: Yup.string().required("Description is required"),
   });
 
   return (
@@ -53,21 +41,20 @@ const AddBook = () => {
             title: "",
             author: "",
             genre: "",
-            description: "",
           }}
           validationSchema={validationSchema}
           onSubmit={(values, { setSubmitting, resetForm }) => {
-            dispatch(addBook(values));
+            addNewBook(values);
             resetForm();
             setIsModalOpen(false);
             setSubmitting(false);
           }}
         >
-          {({ setFieldValue }) => (
-            <Form>
+          {({ setFieldValue, handleSubmit }) => (
+            <form onSubmit={handleSubmit}>
               {/* Upload Cover Image */}
               <div>
-                <label>Upload Cover Image</label>
+                <label>Upload Cover Image</label> <br />
                 <Upload
                   name="img"
                   beforeUpload={(file) => {
@@ -81,17 +68,53 @@ const AddBook = () => {
                 <ErrorMessage name="img" component="div" className="error" />
               </div>
 
-              <InputField name="title" label="Title" />
-              <InputField name="author" label="Author" />
-              <InputField name="genre" label="Genre" />
-              <InputField name="description" label="Description" />
+              {/* Book Title */}
+              <div>
+                <label>Title</label>
+                <Input
+                  name="title"
+                  onChange={(e) => setFieldValue("title", e.target.value)}
+                />
+                <ErrorMessage name="title" component="div" className="error" />
+              </div>
 
+              {/* Author */}
+              <div>
+                <label>Author</label>
+                <Input
+                  name="author"
+                  onChange={(e) => setFieldValue("author", e.target.value)}
+                />
+                <ErrorMessage name="author" component="div" className="error" />
+              </div>
+
+              {/* Genre */}
+              <div>
+                <label>Genre</label>
+                <Input
+                  name="genre"
+                  onChange={(e) => setFieldValue("genre", e.target.value)}
+                />
+                <ErrorMessage name="genre" component="div" className="error" />
+              </div>
+
+              {/* Description */}
+              <div>
+                <label>Description</label>
+                <Input
+                  name="description"
+                  onChange={(e) => setFieldValue("description", e.target.value)}
+                />
+                <ErrorMessage name="description" component="div" className="error" />
+              </div>
+
+              {/* Submit Button */}
               <div style={{ marginTop: "10px" }}>
                 <Button type="primary" htmlType="submit">
                   Add Book
                 </Button>
               </div>
-            </Form>
+            </form>
           )}
         </Formik>
       </Modal>

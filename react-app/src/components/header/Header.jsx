@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { House } from "lucide-react";
-import { Image, Space } from "antd";
+import { Space } from "antd";
 import UserInfo from "../userInfo/User-Info";
 
 import "../../styles/components/header/Header.scss";
-
-import logo from "../images/bda_logo-removebg-preview.png";
+import { useEffect, useState } from "react";
 
 const Header = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -14,11 +12,11 @@ const Header = () => {
 
   const controlHeader = () => {
     if (typeof window !== "undefined") {
-      if (window.screenY)
-        if (window.scrollY > lastScrollY) setIsVisible(false); // Scrolling down
-        else {
-          setIsVisible(true); // Scrolling up
-        }
+      if (window.scrollY > lastScrollY) {
+        setIsVisible(false); // Scrolling down
+      } else {
+        setIsVisible(true); // Scrolling up
+      }
       setLastScrollY(window.scrollY); // Update last scroll position
     }
   };
@@ -38,9 +36,6 @@ const Header = () => {
       }}
     >
       <div className="content">
-        <div className="logo">
-          <img src={logo} alt="logo" />
-        </div>
         <nav>
           <NavLink to="/">
             <House />
@@ -50,7 +45,7 @@ const Header = () => {
           <NavLink to="/library/login">Login</NavLink>
         </nav>
 
-        <Space size={"small"}>
+        <Space size={"small"} style={{ marginLeft: "auto" }}>
           <UserInfo />
         </Space>
       </div>
