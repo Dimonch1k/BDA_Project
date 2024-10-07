@@ -4,11 +4,11 @@ function Footer() {
       className="footer"
       style={{
         textAlign: "center",
-        padding: "15spx 0",
+        padding: "10px 0",
         backgroundColor: "black",
         color: "white",
         bottom: "none",
-        fontSize: "16px",
+        fontSize: "12px",
         flex: "0 0 auto",
       }}
     >

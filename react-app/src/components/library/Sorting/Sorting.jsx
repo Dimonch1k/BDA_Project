@@ -1,4 +1,4 @@
-import "../../../../styles/components/library/Sorting/Sorting.scss";
+import React from 'react'
 
 function Sorting({ setCurrentSort, currentSort, sortingMap }) {
   const sortingNames = Object.keys(sortingMap);
@@ -19,7 +19,7 @@ function Sorting({ setCurrentSort, currentSort, sortingMap }) {
         ))}
       </select>
     </div>
-  );
+  )
 }
 
 export default Sorting;

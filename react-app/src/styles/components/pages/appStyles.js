@@ -7,5 +7,10 @@ export const pageStyles = {
 export const outletStyles = {
   flex: 1,
   display: "flex",
-  paddingTop: "80px",
+  padding: "20px",
+  paddingTop: "80px"
 };
+
+// flex: 1; /* This area takes the remaining space */
+//   display: flex; /* Use flexbox for content alignment if needed */
+//   padding: 20px;
