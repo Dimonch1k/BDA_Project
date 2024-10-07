@@ -1,14 +1,15 @@
 import React, { useCallback, useEffect, useState } from "react";
-import AddBook from "./Add-Book/Add-Book";
-import Sorting from "./Sorting/Sorting";
+import CatalogSettings from "./Catalog-Settings/Catalog.jsx";
 import Book from "./Book/Book";
 
 import "../../styles/components/library/Library.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchBooksItems } from "../../slices/booksSlice";
 
 const sortingMap = {
-  Title: (a, b) => a.title - b.title,
-  Author: (a, b) => b.author - a.author,
-  Genre: (a, b) => a.genre - b.genre,
+  Title: (a, b) => a.title.localeCompare(b.title),
+  Author: (a, b) => a.author.localeCompare(b.author),
+  Genre: (a, b) => a.genre[0].localeCompare(b.genre[0]),
 };
 
 const Library = () => {
@@ -17,9 +18,8 @@ const Library = () => {
     return savedBooks ? JSON.parse(savedBooks) : [];
   });
 
-  const [currentFilter, setCurrentFilter] = useState("All");
-
   const [currentSort, setCurrentSort] = useState("Title");
+  const [currentSearch, setCurrentSearch] = useState("");
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -30,9 +30,6 @@ const Library = () => {
         const limitedBooks = data.slice(0, 10);
         setBooks(limitedBooks);
 
-        books.map((book) => console.log(book));
-
-
         localStorage.setItem("books", JSON.stringify(limitedBooks));
       } catch (error) {
         console.error("Error fetching books:", error);
@@ -42,34 +39,57 @@ const Library = () => {
     fetchBooks();
   }, []);
 
+  // console.log(Object.keys(currentSearch));
+  // console.log(currentSearch);
+
+  const searchTerm = String(currentSearch || "").toLowerCase();
+
+  const filteredAndSortedBooks = () => {
+    return books
+      .filter((book) => {
+        return (
+          book.title.toLowerCase().includes(searchTerm) ||
+          book.author.toLowerCase().includes(searchTerm) ||
+          book.genre[0].toLowerCase().includes(searchTerm)
+        );
+      })
+      .sort(sortingMap[currentSort]);
+  };
 
   const renderBooks = () => {
-    return books.sort(sortingMap[currentSort]).map((book) => (
-      <Book key={book.id}
-        image={book.cover_image}
-        title={book.title}
-        author={book.author}
-        genre={book.genre}
-        description={book.description} />
+    return filteredAndSortedBooks().map((book) => (
+      <Book key={book.id} book={book} />
     ));
   };
+
+  // const dispatch = useDispatch();
+  // const {
+  //   items: booksItems,
+  //   status,
+  //   error,
+  // } = useSelector((state) => state.books);
+
+  // useEffect(() => {
+  //   if (status === "idle") {
+  //     dispatch(fetchBooksItems());
+  //   }
+  // }, [status, dispatch]);
+
+  // if (status === "loading") return <div>Loading...</div>;
+
+  // if (status === "failed") return <div>Error: {error}</div>;
 
   return (
     <>
       <div className="container">
-        <div className="catalog-settings">
-          {/* Add new Book */}
-          <AddBook />
+        <CatalogSettings
+          sortingMap={sortingMap}
+          setCurrentSort={setCurrentSort}
+          setCurrentSearch={setCurrentSearch}
+          currentSort={currentSort}
+        />
 
-          {/* Sorting */}
-          <Sorting setCurrentSort={setCurrentSort} currentSort={currentSort} sortingMap={sortingMap} />
-
-          {/* Filter */}
-        </div>
-
-        <div className="book-list">
-          {renderBooks()}
-        </div>
+        <div className="book-list">{renderBooks()}</div>
       </div>
     </>
   );

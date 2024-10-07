@@ -3,6 +3,7 @@
 .auth,
 .login {
   font-family: "Roboto Condensed", sans-serif;
+  margin: 0 auto;
 
   &__container {
     display: flex;
@@ -12,10 +13,11 @@
   }
 
   &__box {
-    background-color: #000;
+    background-color: #3c6e47;
   }
 
   &__title {
+    margin: 0;
     font-size: 80px;
     letter-spacing: 8px;
     margin-bottom: 30px;
