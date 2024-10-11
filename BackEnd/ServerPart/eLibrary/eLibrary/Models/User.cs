@@ -1,4 +1,5 @@
-
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 namespace eLibrary.Models
 {
     public class User
