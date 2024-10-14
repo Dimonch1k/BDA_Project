@@ -56,7 +56,7 @@ const Library = () => {
 
   return (
     <>
-      <div className="container mx-auto pt-40">
+      <div className="container mx-auto py-5">
         <CatalogSettings
           sortingMap={sortingMap}
           setCurrentSort={setCurrentSort}

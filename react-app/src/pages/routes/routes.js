@@ -5,6 +5,7 @@ import {
   Home,
   Library,
   BookPage,
+  Favorite,
   AboutUs,
   ContactUs,
   SignIn,
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/:id",
         element: <BookPage />,
+      },
+      {
+        path: "/favorite",
+        element: <Favorite />,
       },
       {
         path: "/about-us",
