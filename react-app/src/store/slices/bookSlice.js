@@ -34,7 +34,7 @@ import { nanoid } from "@reduxjs/toolkit";
 export const fetchBooksItems = createAsyncThunk(
   "books/fetchBooks",
   async () => {
-    const response = await fetch("https://freetestapi.com/api/v1/books");
+    const response = await fetch("https://fakestoreapi.com/products");
     if (!response.ok) throw new Error("Failed to fetch books");
 
     const data = await response.json();
