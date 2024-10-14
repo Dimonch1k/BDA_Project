@@ -34,9 +34,9 @@ header {
     display: flex;
     justify-content: center;
     gap: 20px;
-    margin: 0 auto;
+    margin-right: auto;
 
-    a {
+    a:not(:first-of-type) {
       text-decoration: none;
       color: white;
       border: 1px solid transparent;
@@ -49,12 +49,12 @@ header {
       font-family: "Montserrat", Arial, sans-serif;
       font-weight: 500;
       font-size: 18px;
+    }
 
-      &:hover {
-        border: 1px solid white;
-        border-radius: 10px;
-        transition: all 0.3s linear;
-      }
+    a:not(:first-of-type):hover {
+      border: 1px solid white;
+      border-radius: 10px;
+      transition: all 0.3s linear;
     }
   }
 }

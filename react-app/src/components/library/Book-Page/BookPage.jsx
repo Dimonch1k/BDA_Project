@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { selectAllBooks } from "../../../slices/booksSlice";
+import { selectAllBooks } from "../../../store/slices/bookSlice";
 
 // import "../../../styles/components/serverPosts/PostDetail.scss";
 
