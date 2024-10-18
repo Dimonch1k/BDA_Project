@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useStateContext } from "../../contexts/ContextProvider";
+import { useStateContext } from "../../../contexts/ContextProvider";
 import { FaArrowRightLong } from "react-icons/fa6";
 
 function SearchBar() {
@@ -11,7 +11,6 @@ function SearchBar() {
     setInputValue("");
   };
 
-  // Make search when click enter key
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleSearch();

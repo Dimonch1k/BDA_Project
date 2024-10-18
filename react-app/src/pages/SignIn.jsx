@@ -1,48 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import InputField from "../components/library/InputField";
+import InputSign from "../components/library/Catalog/InputSign";
+import { useDispatch, useSelector } from "react-redux";
+import { signInUser, resetSignIn } from "../store/slices/signinSlice";
+import { useStateContext } from "../contexts/ContextProvider";
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { success, error } = useSelector((state) => state.signin);
+  const { loginUser } = useStateContext();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Sends request to server in order to login user
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setError(null);
-    setSuccess(null);
-    try {
-      const response = await fetch("/api/sign-in", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        setSuccess("Login successful!");
-        navigate("/library/dashboard");
-      } else {
-        setError(data.message || "Login failed.");
-      }
-    } catch (error) {
-      setError("An error occurred. Please try again later.");
-    }
+    dispatch(signInUser(formData));
   };
+
+  useEffect(() => {
+    if (success) {
+      const userData = success;
+      loginUser(userData);
+      navigate("/library/");
+    }
+    return () => {
+      dispatch(resetSignIn());
+    };
+  }, [success, dispatch, navigate, loginUser]);
 
   return (
     <div className="font-sans relative h-full">
@@ -53,7 +45,6 @@ const SignIn = () => {
           className="w-full h-full object-cover"
         />
       </div>
-
       <div className="relative flex justify-center items-center h-full">
         <form
           onSubmit={handleSubmit}
@@ -62,8 +53,7 @@ const SignIn = () => {
           <div className="mb-12">
             <h3 className="sign-in__title">Login</h3>
           </div>
-
-          <InputField
+          <InputSign
             label="Email"
             type="email"
             name="email"
@@ -71,7 +61,7 @@ const SignIn = () => {
             onChange={handleChange}
             placeholder="Enter email"
           />
-          <InputField
+          <InputSign
             label="Password"
             type="password"
             name="password"
@@ -79,14 +69,11 @@ const SignIn = () => {
             onChange={handleChange}
             placeholder="Enter password"
           />
-
           {error && <p className="error">{error}</p>}
           {success && <p className="success">{success}</p>}
-
           <button type="submit" className="sign-in__submit">
             Login
           </button>
-
           <p className="text-gray-800 text-sm mt-8 text-center">
             Don't have an account?{" "}
             <button

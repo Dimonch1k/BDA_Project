@@ -7,7 +7,7 @@ import { addBook } from "../../../store/slices/bookSlice";
 import * as Yup from "yup";
 
 import CoverImageUpload from "./CoverImageUpload";
-import InputField from "./InputField";
+import InputAddBook from "./InputAddBook";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
@@ -24,15 +24,14 @@ const AddBook = () => {
   const handleCancel = () => setIsModalOpen(false);
 
   const handleAddBook = (data) => {
-    const file = data.cover_image;
+    const file = data.image;
 
     const reader = new FileReader();
     reader.onload = () => {
       const url = URL.createObjectURL(
         new Blob([reader.result], { type: file.type })
       );
-
-      dispatch(addBook({ ...data, cover_image: url }));
+      dispatch(addBook({ ...data, image: url }));
       message.success("Book added successfully");
     };
     reader.readAsArrayBuffer(file);
@@ -42,9 +41,7 @@ const AddBook = () => {
     <>
       <button
         onClick={showModal}
-        className="flex items-center justify-center bg-blue-500 
-        text-white p-3 rounded-full shadow-lg hover:bg-blue-600 
-        transition-all duration-300 ease-in-out transform hover:scale-105"
+        className="flex items-center justify-center bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition-all duration-300 ease-in-out transform hover:scale-105"
       >
         <PlusCircleOutlined className="text-2xl" />
       </button>
@@ -73,13 +70,11 @@ const AddBook = () => {
         >
           {({ setFieldValue, isSubmitting }) => (
             <Form>
-              {/* Upload Cover Image */}
               <CoverImageUpload setFieldValue={setFieldValue} />
-
-              <InputField name="title" label="Title" />
-              <InputField name="author" label="Author" />
-              <InputField name="genre" label="Genre" />
-              <InputField name="description" label="Description" />
+              <InputAddBook name="title" label="Title" />
+              <InputAddBook name="author" label="Author" />
+              <InputAddBook name="genre" label="Genre" />
+              <InputAddBook name="description" label="Description" />
 
               <div className="mt-2.5">
                 <Button
