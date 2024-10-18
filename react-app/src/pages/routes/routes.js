@@ -1,11 +1,16 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import App from "../../App";
-import Home from "../Home";
-import Library from "../../components/library/Library";
-import Auth from "../../components/auth/Auth";
-import Login from "../../components/auth/Login";
-import BookPage from "../../components/library/Book-Page/BookPage";
+import {
+  Home,
+  Library,
+  BookPage,
+  Favorite,
+  AboutUs,
+  ContactUs,
+  SignIn,
+  SignUp,
+} from "../";
 
 const router = createBrowserRouter([
   {
@@ -26,12 +31,24 @@ const router = createBrowserRouter([
         element: <BookPage />,
       },
       {
-        path: "/library/auth",
-        element: <Auth />,
+        path: "/favorite",
+        element: <Favorite />,
       },
       {
-        path: "/library/login",
-        element: <Login />,
+        path: "/about-us",
+        element: <AboutUs />,
+      },
+      {
+        path: "/contact-us",
+        element: <ContactUs />,
+      },
+      {
+        path: "/library/sign-in",
+        element: <SignIn />,
+      },
+      {
+        path: "/library/sign-up",
+        element: <SignUp />,
       },
     ],
   },

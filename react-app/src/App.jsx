@@ -1,18 +1,21 @@
+import "./App.scss";
 import { Outlet, ScrollRestoration } from "react-router-dom";
-import Header from "./components/header/Header";
-import Footer from "./components/footer/Footer";
-
-import { pageStyles, outletStyles } from "./styles/components/pages/appStyles";
+import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
 
 function App() {
   return (
-    <div style={pageStyles}>
+    <div className="flex relative">
       <ScrollRestoration />
-      <Header />
-      <div style={outletStyles}>
-        <Outlet />
+      <div className="flex flex-col min-h-screen w-full bg-main-bg">
+        <NavBar />
+
+        <div className="flex-grow pt-20">
+          <Outlet />
+        </div>
+
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 }
