@@ -5,3 +5,4 @@ export { default as Book } from "./library/Book";
 export { default as Catalog } from "./library/Catalog";
 export { default as UserInfo } from "./library/UserInfo";
 export { default as AddBook } from "./library/Add-Book/AddBook";
+export { default as ContactForm } from "./ContactForm";

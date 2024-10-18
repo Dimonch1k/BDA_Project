@@ -4,7 +4,7 @@
   transform transition-transform duration-500 ease-in-out;
 
   &__content {
-    @apply container md:flex items-center justify-between 
+    @apply lg:container md:flex items-center justify-between 
     bg-white py-4 md:px-10 px-6 w-full mx-auto;
   }
 
@@ -16,7 +16,7 @@
 
   &__link {
     @apply text-gray-800 hover:text-blue-400 duration-500 
-    lg:text-base md:text-sm text-base xl:ml-4 ml-2 text-nowrap;
+    lg:text-base md:text-sm text-base text-nowrap font-semibold;
   }
 }
 
@@ -52,4 +52,35 @@
 
 .success {
   @apply text-green-500 text-center;
+}
+
+// Search Bar
+.searchBar {
+  @apply relative flex w-60 space-x-1 rounded-full shadow-md mr-3;
+}
+
+.searchInput {
+  @apply w-full px-4 py-2 rounded-full focus:outline-none border-none 
+  bg-white text-gray-900;
+}
+
+.searchButtonEnter {
+  @apply absolute right-0 -translate-x-2 translate-y-1 p-2 
+  rounded-full text-white bg-orange-500 dark:bg-blue-500;
+}
+
+// User Info
+.custom-modal .ant-modal-body {
+  padding: 20px 40px;
+}
+
+.custom-modal .ant-modal-header {
+  border-bottom: none;
+  text-align: center;
+}
+
+.custom-modal .ant-modal-footer {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
 }

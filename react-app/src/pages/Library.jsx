@@ -4,6 +4,7 @@ import Book from "../components/library/Book.jsx";
 
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBooksItems, selectAllBooks } from "../store/slices/bookSlice.js";
+import { useStateContext } from "../contexts/ContextProvider.js";
 
 const sortingMap = {
   Title: (a, b) => a.title.localeCompare(b.title),
@@ -26,9 +27,7 @@ const Library = () => {
 
   // Searching Book
   const [currentSort, setCurrentSort] = useState("Title");
-  const [currentSearch, setCurrentSearch] = useState("");
-
-  const searchTerm = String(currentSearch || "").toLowerCase();
+  const { searchTerm, setSearchTerm } = useStateContext();
 
   const filteredAndSortedBooks = () => {
     return books
@@ -52,7 +51,11 @@ const Library = () => {
     return <div className="size-12">Loading...</div>;
 
   if (bookStatus === "failed")
-    return <div className="text-red-600 size-12">Error: {error}</div>;
+    return (
+      <div className="w-full text-center text-red-600 size-12 mt-10">
+        Error: {error}
+      </div>
+    );
 
   return (
     <>
@@ -60,10 +63,10 @@ const Library = () => {
         <CatalogSettings
           sortingMap={sortingMap}
           setCurrentSort={setCurrentSort}
-          setCurrentSearch={setCurrentSearch}
+          setSearchTerm={setSearchTerm}
           currentSort={currentSort}
         />
-        <div className="grid grid-cols-auto-fill max-[200px] gap-5 row-gap-7.5">
+        <div className="grid grid-cols-[repeat(auto-fit, minmax(200px, 1fr))] gap-5">
           {renderBooks()}
         </div>
       </div>

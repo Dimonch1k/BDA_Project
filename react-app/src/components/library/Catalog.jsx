@@ -1,31 +1,24 @@
 import AddBook from "./Add-Book/AddBook";
-import { Input } from "antd";
-
-const { Search } = Input;
+import SearchBar from "./SearchBar";
 
 const Catalog = ({
   sortingMap,
   setCurrentSort,
   currentSort,
-  setCurrentSearch,
+  setSearchTerm,
 }) => {
-  const handleChange = (value) => setCurrentSearch(value.target.value.trim());
+  const handleChange = (value) => setSearchTerm(value.target.value.trim());
   const sortingNames = Object.keys(sortingMap);
   const handleSetCurrentSort = (sortingName) => {
     setCurrentSort(sortingName);
   };
 
   return (
-    <div className="flex items-center gap-1.5 mb-5 px-5">
+    <div className="flex items-center gap-1.5 mb-5 px-5 h-12">
       {/* Add new Book form */}
       <AddBook />
-
-      {/* Search field for books */}
-      <Search
-        placeholder="Search books by title, author, or genre"
-        onChange={(e) => handleChange(e)}
-        className="w-72"
-      />
+      {/* Search bar */}
+      <SearchBar />
 
       {/* Books sorting */}
       <div className="relative">

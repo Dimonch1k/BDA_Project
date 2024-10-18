@@ -38,6 +38,7 @@ export const fetchBooksItems = createAsyncThunk(
     if (!response.ok) throw new Error("Failed to fetch books");
 
     const data = await response.json();
+    console.log(data);
     // Limit to 10 books
     return data.slice(0, 20);
   }

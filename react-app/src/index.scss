@@ -38,3 +38,15 @@ button {
 details summary {
   @apply list-none;
 }
+
+.ant-input-wrapper {
+  @apply h-full;
+}
+.ant-input {
+  @apply h-full;
+}
+
+.ant-btn {
+  height: 100% !important;
+  line-height: auto !important;
+}

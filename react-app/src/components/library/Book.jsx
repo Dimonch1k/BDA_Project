@@ -9,19 +9,14 @@ const Book = ({ book }) => {
       className="relative rounded-md text-white bg-amber-600"
       onClick={() => openBook(book)}
     >
-      <div className="relative h-auto w-full overflow-hidden">
-        <img src={book.cover_image} alt="book img" className="h-full w-full" />
+      <div className="book__img-wrapper">
+        <img src={book.image} alt="book img" className="book__img" />
       </div>
-
-      <div className="px-5 py-3.5">
-        <h2 className="font-bold font-playfair text-2xl text-center my-1.5 mb-2.5">
-          {book.title}
-        </h2>
-        <p className="font-lato italic text-lg my-2.5">
-          Author: "{book.author}"
-        </p>
-        <p className="font-raleway font-light my-2.5">Genre: "{book.genre}"</p>
-        <p className="font-opensans text-base my-2.5">{book.description}</p>
+      <div className="book__info">
+        <h2 className="book__title">{book.title}</h2>
+        <p className="book__author">Author: "{book.author}"</p>
+        <p className="book__genre">Genre: "{book.genre}"</p>
+        <p className="book__description">{book.description}</p>
       </div>
     </div>
   );

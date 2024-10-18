@@ -40,13 +40,14 @@ const AddBook = () => {
 
   return (
     <>
-      <Button
-        shape="circle"
+      <button
         onClick={showModal}
-        className="mr-auto p-0 w-auto h-auto min-w-6"
+        className="flex items-center justify-center bg-blue-500 
+        text-white p-3 rounded-full shadow-lg hover:bg-blue-600 
+        transition-all duration-300 ease-in-out transform hover:scale-105"
       >
-        <PlusCircleOutlined className="size-7" />
-      </Button>
+        <PlusCircleOutlined className="text-2xl" />
+      </button>
 
       <Modal
         title="Add Book Form"
