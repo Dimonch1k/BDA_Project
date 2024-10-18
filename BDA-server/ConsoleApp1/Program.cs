@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using Nancy;
 using Nancy.Hosting.Self;
 using Nancy.TinyIoc;
@@ -6,9 +6,7 @@ using Microsoft.Extensions.Logging;
 using ConsoleApp1.Repository;
 using ConsoleApp1.Service;
 using ConsoleApp1.Modules;
-using ConsoleApp1.Entity;
-using Serilog.Core;
-using System.Reflection;
+
 
 namespace ConsoleApp1
 {
@@ -19,7 +17,7 @@ namespace ConsoleApp1
             base.ConfigureApplicationContainer(container);
 
             // Connection string for MySQL database
-            var connectionString = "Server=localhost;Database=testdb;User ID=root;Password=1qaz!QAZ;";
+            var connectionString = "Server=localhost;Port=3306;Database=elibrary;User ID=root;";
 
             // Create a logger factory
             var loggerFactory = LoggerFactory.Create(builder =>
