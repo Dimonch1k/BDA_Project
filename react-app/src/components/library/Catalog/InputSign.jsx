@@ -1,3 +1,5 @@
+import "../../../styles/pages/Sign.scss";
+
 const InputSign = ({ label, type, name, value, onChange, placeholder }) => {
   return (
     <div className="mt-8">
@@ -8,8 +10,7 @@ const InputSign = ({ label, type, name, value, onChange, placeholder }) => {
         value={value}
         onChange={onChange}
         required
-        className="w-full bg-transparent text-sm text-gray-800 border-b 
-          border-gray-300 focus:border-blue-500 px-2 py-3 outline-none"
+        className="sign-input-field"
         placeholder={placeholder}
       />
     </div>

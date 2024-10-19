@@ -1,9 +1,11 @@
+import "../styles/components/NavBar.scss";
+import logo from "../data/images/bda_logo.png";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
-import logo from "../data/images/bda_logo.png";
-import { useStateContext } from "../contexts/ContextProvider";
 import UserInfo from "./library/UserInfo";
+import { useSelector } from "react-redux";
+import { selectUser } from "../store/slices/userSlice";
 
 const links = [
   { name: "Library", link: "/library" },
@@ -14,50 +16,42 @@ const links = [
 
 const NavBar = () => {
   const [open, setOpen] = useState(false);
-  const { user } = useStateContext();
+  const user = useSelector(selectUser);
 
   const toggleMenu = () => setOpen(!open);
-  const closeMenu = () => setOpen(false);
 
   return (
     <div className="navBar">
       <div className="navBar__content">
         <NavLink to="/">
-          <img src={logo} alt="logo" className="xl:w-40 w-36 h-full" />
+          <img src={logo} alt="logo" className="navBar__logo" />
         </NavLink>
 
-        <div
-          onClick={toggleMenu}
-          className="absolute right-8 top-7 cursor-pointer md:hidden text-xl"
-        >
+        <div onClick={toggleMenu} className="navBar__toggle">
           {open ? <FaTimes /> : <FaBars />}
         </div>
 
-        <ul
-          className={`navBar__links ${
-            open ? "top-12" : "top-[-490px] container"
-          }`}
-        >
-          {links.map((link) => (
-            <li className="lg:ml-8 md:ml-5 md:my-0 my-7" key={link.name}>
+        <ul className={`navBar__links ${open ? "top-12" : "top-[-490px]"}`}>
+          {links.map(({ name, link }) => (
+            <li key={name} className="navBar__item">
               <NavLink
-                to={link.link}
+                to={link}
                 className="navBar__link"
-                onClick={closeMenu}
+                onClick={() => setOpen(false)}
               >
-                {link.name}
+                {name}
               </NavLink>
             </li>
           ))}
 
-          {user === true ? (
+          {user ? (
+            <UserInfo />
+          ) : (
             <NavLink to="/library/sign-in">
-              <button className="signBtn" onClick={closeMenu}>
+              <button className="signBtn" onClick={() => setOpen(false)}>
                 Sign in
               </button>
             </NavLink>
-          ) : (
-            <UserInfo />
           )}
         </ul>
       </div>

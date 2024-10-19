@@ -1,3 +1,4 @@
+import "../../../styles/components/Catalog.scss";
 import AddBook from "./AddBook";
 import SearchBar from "./SearchBar";
 import SortingSelector from "./SortingSelector";
@@ -6,7 +7,7 @@ const Catalog = ({ sortingMap, setCurrentSort, currentSort }) => {
   const sortingNames = Object.keys(sortingMap);
 
   return (
-    <div className="flex justify-between items-center gap-4 mb-5 px-5 py-10 h-12 rounded-full shadow-md">
+    <div className="catalog">
       {/* Add new Book form */}
       <div>
         <AddBook />

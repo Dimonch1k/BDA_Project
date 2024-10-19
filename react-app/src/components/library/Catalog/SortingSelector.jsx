@@ -23,29 +23,23 @@ const SortingSelector = ({ sortingNames, currentSort, setCurrentSort }) => {
   };
 
   return (
-    <div className="relative inline-block text-left" ref={selectorRef}>
-      <button
-        className="inline-flex justify-between w-full rounded-lg px-5 py-3 bg-[#3b82f6] text-white font-semibold
-        shadow-lg hover:bg-[#2563eb] focus:outline-none focus:ring-4 focus:ring-[#60a5fa]"
-        onClick={() => setIsOpen(!isOpen)}
-      >
+    <div className="catalog__sort" ref={selectorRef}>
+      <button className="catalog__sort-btn" onClick={() => setIsOpen(!isOpen)}>
         {currentSort || "Sort by"}
-        <span className="ml-2 transform transition-transform duration-300 flex items-center">
+        <span className="catalog__sort-icon">
           {isOpen ? <IoIosArrowDown /> : <IoIosArrowForward />}
         </span>
       </button>
 
       {isOpen && (
-        <div className="absolute mt-2 w-full rounded-lg shadow-lg bg-white z-10">
+        <div className="catalog__open-sort">
           {sortingNames.map((sortingName) => (
             <div
               key={sortingName}
-              className={`block px-5 py-3 text-gray-900 hover:bg-[#3b82f6] hover:text-white transition-colors 
-                duration-200 ease-in-out cursor-pointer rounded-lg ${
-                  currentSort === sortingName
-                    ? "bg-[#3b82f6] text-white rounded-b-lg"
-                    : ""
-                }`}
+              className={`catalog__open-sort-item ${
+                currentSort === sortingName &&
+                "bg-[#3b82f6] text-white rounded-b-lg"
+              }`}
               onClick={() => handleSelectSort(sortingName)}
             >
               {sortingName}

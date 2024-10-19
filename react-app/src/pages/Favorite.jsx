@@ -13,9 +13,9 @@ const Favorites = () => {
           No favorites added yet.
         </p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
+        <div className="favorite-list">
           {favorites.map((book) => (
-            <Book key={book.id} book={book} favoriteBook={true} />
+            <Book key={book.id} book={book} isFavoriteBook={true} />
           ))}
         </div>
       )}

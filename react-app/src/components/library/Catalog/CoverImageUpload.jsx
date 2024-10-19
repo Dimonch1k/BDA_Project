@@ -4,14 +4,14 @@ import React from "react";
 
 const CoverImageUpload = ({ setFieldValue }) => {
   const handledUpload = ({ file }) => {
-    setFieldValue("cover_image", file);
+    setFieldValue("image", file);
   };
 
   return (
     <Upload
       beforeUpload={() => false}
       onChange={handledUpload}
-      accept="image/*"
+      accept=".jpg, .jpeg, .png,"
     >
       <Button className="upload-button" icon={<UploadOutlined />}>
         Upload Cover Image
