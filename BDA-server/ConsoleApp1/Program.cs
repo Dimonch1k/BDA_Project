@@ -77,10 +77,10 @@ namespace ConsoleApp1
                 RewriteLocalhost = true
             };
 
-            using (var host = new NancyHost(config, new Uri("https://146.190.176.10:5000")))
+            using (var host = new NancyHost(config, new Uri("http://127.0.0.1:5000")))
             {
                 host.Start();
-                Console.WriteLine("Nancy running on https://146.190.176.10:5000");
+                Console.WriteLine("Nancy running on http://127.0.0.1:5000");
                 Console.ReadLine();
             }
         }
