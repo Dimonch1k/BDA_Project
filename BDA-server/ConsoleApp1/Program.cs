@@ -9,6 +9,7 @@ using ConsoleApp1.Modules;
 using ConsoleApp1.Entity;
 using Serilog.Core;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ConsoleApp1
 {
@@ -71,18 +72,32 @@ namespace ConsoleApp1
     {
         public static void Main(string[] args)
         {
+            var certificate = new X509Certificate2("/etc/ssl/certs/apache-selfsigned.crt");
             // Start Nancy application
             HostConfiguration config = new HostConfiguration
             {
-                RewriteLocalhost = true
+                RewriteLocalhost = true,
             };
 
-            using (var host = new NancyHost(config, new Uri("http://127.0.0.1:5000")))
+            using (var host = new NancyHost(config, new Uri("https://0.0.0.0:5000")))
             {
+                AddCertificateToHttpsListener("https://0.0.0.0:5000", certificate);
+
                 host.Start();
-                Console.WriteLine("Nancy running on http://127.0.0.1:5000");
+                Console.WriteLine("Nancy running on https://0.0.0.0:5000");
                 Console.ReadLine();
             }
         }
+
+        private static void AddCertificateToHttpsListener(string uriPrefix, X509Certificate2 certificate)
+        {
+
+            string certificateThumbprint = certificate.Thumbprint;
+
+        }
     }
+
+
+
+    
 }
