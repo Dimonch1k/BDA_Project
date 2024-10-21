@@ -3,8 +3,6 @@ using ConsoleApp1.Service;
 using Microsoft.Extensions.Logging;
 using Nancy;
 using Nancy.ModelBinding;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ConsoleApp1.Modules
@@ -12,7 +10,7 @@ namespace ConsoleApp1.Modules
     public class BookModule : NancyModule
     {
         private readonly IBookService _bookService;
-        private readonly ILogger<BookModule> _logger; 
+        private readonly ILogger<BookModule> _logger;
 
         public BookModule(IBookService bookService, ILogger<BookModule> logger) : base("/api/books")
         {
@@ -64,6 +62,9 @@ namespace ConsoleApp1.Modules
                 {
                     var books = _bookService.GetAllBooks();
                     _logger.LogInformation("Books retrieved successfully.");
+                    _logger.LogInformation(string.Join(Environment.NewLine, books.Select(book =>
+                    $"Id: {book.Id}, Title: {book.Title}, Author: {book.Author}, ImageUrl: {book.ImageUrl}")));
+
                     return Response.AsJson(books, HttpStatusCode.OK);
                 }
                 catch (Exception ex)
