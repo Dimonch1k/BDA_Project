@@ -70,7 +70,7 @@ namespace ConsoleApp1.Modules
                 // Bind the incoming request data to the User object
                 User loginData = this.Bind<User>();
                 _logger.LogWarning($"Login attempt for email: {loginData.Email}");
-
+                _logger.LogWarning(loginData.Email, loginData.Password);
                 try
                 {
                     // Attempt to log in the user using the provided email and password
