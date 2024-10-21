@@ -110,8 +110,22 @@ namespace ConsoleApp1
             using (var host = new NancyHost(hostConfig, new Uri("http://127.0.0.1:5000"))) 
             {
                 host.Start();
-                Console.WriteLine("Nancy running on http://127.0.0.1:5000");
-                Console.ReadLine();
+                while (true)
+                {
+                    string input = "";
+                    input = Console.ReadLine();
+
+                    if (input == "exit")
+                    {
+                        host.Stop();
+                        Environment.Exit(0);  
+                    }
+                    else if (input == "restart")
+                    {
+                        host.Stop();
+                        Environment.Exit(66);  
+                    }
+                }
             }
         }
     }
