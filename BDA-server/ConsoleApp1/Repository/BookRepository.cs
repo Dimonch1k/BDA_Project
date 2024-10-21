@@ -71,7 +71,7 @@ namespace ConsoleApp1.Repository
             {
                 using (IDbConnection db = new MySqlConnection(_connectionString))
                 {
-                    return db.Query<Book>("SELECT id, title, author, genre, description, image_url, average_rating, total_reviews, created_at FROM books;").AsList();
+                    return db.Query<Book>("SELECT id, title, author, genre, description, imageUrl, average_rating, total_reviews, created_at FROM books;").AsList();
                 }
             }
             catch (MySqlException ex)
