@@ -39,10 +39,7 @@ const AddBook = () => {
 
   return (
     <>
-      <button
-        onClick={showModal}
-        className="flex items-center justify-center bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition-all duration-300 ease-in-out transform hover:scale-105"
-      >
+      <button onClick={showModal} className="catalog__add-book-btn">
         <PlusCircleOutlined className="text-2xl" />
       </button>
 

@@ -18,16 +18,16 @@ function SearchBar() {
   };
 
   return (
-    <div className="searchBar">
+    <div className="catalog__search-bar">
       <input
         type="text"
         placeholder="Search..."
         onChange={(e) => setInputValue(e.target.value)}
-        className="searchInput"
+        className="catalog__search-input"
         onKeyDown={handleKeyDown}
         value={inputValue}
       />
-      <button onClick={handleSearch} className="searchButtonEnter">
+      <button onClick={handleSearch} className="catalog__search-btn-enter">
         <FaArrowRightLong />
       </button>
     </div>

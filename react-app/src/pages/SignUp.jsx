@@ -1,3 +1,5 @@
+import "../styles/pages/Sign.scss";
+import library from "../data/images/library.avif";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import InputSign from "../components/library/Catalog/InputSign";
@@ -20,7 +22,7 @@ const SignUp = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    setPasswordError(""); // Clear error on change
+    setPasswordError("");
   };
 
   const handleSubmit = (e) => {
@@ -45,16 +47,12 @@ const SignUp = () => {
   }, [success, dispatch, navigate]);
 
   return (
-    <div className="font-sans relative h-full">
-      <div className="absolute top-0 left-0 w-full h-full">
-        <img
-          src={require("../data/images/library.avif")}
-          alt="Library Background"
-          className="w-full h-full object-cover"
-        />
+    <div className="sign-up">
+      <div className="bg-img">
+        <img src={library} alt="Library Bg" className="bg-img__img" />
       </div>
-      <div className="relative flex justify-center items-center h-full">
-        <form onSubmit={handleSubmit} className="sign-up">
+      <div className="sign-up__content">
+        <form onSubmit={handleSubmit} className="sign-up__form">
           <div className="mb-12">
             <h3 className="sign-up__title">Register</h3>
           </div>
@@ -75,12 +73,12 @@ const SignUp = () => {
           <button type="submit" className="sign-up__submit">
             Register
           </button>
-          <p className="text-gray-800 text-sm mt-8 text-center">
+          <p className="sign-up__text">
             Already have an account?{" "}
             <button
               type="button"
               onClick={() => navigate("/library/sign-in")}
-              className="text-blue-500 font-semibold hover:underline ml-1"
+              className="sign-up__btn"
             >
               Login here
             </button>

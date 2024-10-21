@@ -9,6 +9,11 @@ const initialState = {
 export const signInUser = createAsyncThunk(
   "signin/signInUser",
   async (formData, { rejectWithValue }) => {
+    return {
+      name: "John Doe",
+      email: "johndoe@gmail.com",
+      password: "1234",
+    };
     try {
       const response = await fetch("/api/sign-in", {
         method: "POST",

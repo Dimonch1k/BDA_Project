@@ -4,8 +4,6 @@ import Book from "../components/library/Book.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBooksItems, selectAllBooks } from "../store/slices/bookSlice.js";
 import { useStateContext } from "../contexts/ContextProvider.js";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
-import "../styles/animations.css";
 
 const sortingMap = {
   Title: (a, b) => a.title.localeCompare(b.title),
@@ -42,13 +40,11 @@ const Library = () => {
 
   const renderBooks = () => {
     return (
-      <TransitionGroup className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-10">
+      <div className="book-list">
         {filteredAndSortedBooks().map((book) => (
-          <CSSTransition key={book.id} timeout={500} classNames="fade">
-            <Book book={book} favoriteBook={false} />
-          </CSSTransition>
+          <Book book={book} isFavoriteBook={false} />
         ))}
-      </TransitionGroup>
+      </div>
     );
   };
 

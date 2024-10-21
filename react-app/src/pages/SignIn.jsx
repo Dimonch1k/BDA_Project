@@ -1,15 +1,16 @@
+import "../styles/pages/Sign.scss";
+import library from "../data/images/library.avif";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import InputSign from "../components/library/Catalog/InputSign";
 import { useDispatch, useSelector } from "react-redux";
 import { signInUser, resetSignIn } from "../store/slices/signinSlice";
-import { useStateContext } from "../contexts/ContextProvider";
+import { setUserInfo } from "../store/slices/userSlice";
 
 const SignIn = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { success, error } = useSelector((state) => state.signin);
-  const { loginUser } = useStateContext();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -28,28 +29,21 @@ const SignIn = () => {
   useEffect(() => {
     if (success) {
       const userData = success;
-      loginUser(userData);
+      dispatch(setUserInfo(userData));
       navigate("/library/");
     }
     return () => {
       dispatch(resetSignIn());
     };
-  }, [success, dispatch, navigate, loginUser]);
+  }, [success, dispatch, navigate]);
 
   return (
-    <div className="font-sans relative h-full">
-      <div className="absolute top-0 left-0 w-full h-full">
-        <img
-          src={require("../data/images/library.avif")}
-          alt="Library Background"
-          className="w-full h-full object-cover"
-        />
+    <div className="sign-in">
+      <div className="bg-img">
+        <img src={library} alt="Library Bg" className="bg-img__img" />
       </div>
-      <div className="relative flex justify-center items-center h-full">
-        <form
-          onSubmit={handleSubmit}
-          className="sign-in bg-white p-8 rounded-lg shadow-md"
-        >
+      <div className="sign-in__content">
+        <form onSubmit={handleSubmit} className="sign-in__form">
           <div className="mb-12">
             <h3 className="sign-in__title">Login</h3>
           </div>
@@ -74,12 +68,12 @@ const SignIn = () => {
           <button type="submit" className="sign-in__submit">
             Login
           </button>
-          <p className="text-gray-800 text-sm mt-8 text-center">
+          <p className="sign-in__text">
             Don't have an account?{" "}
             <button
               type="button"
               onClick={() => navigate("/library/sign-up")}
-              className="text-blue-500 font-semibold hover:underline ml-1"
+              className="sign-in__btn"
             >
               Register here
             </button>

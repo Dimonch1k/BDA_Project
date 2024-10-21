@@ -1,4 +1,5 @@
 import bdaLogo from "../data/images/bda_logo.png";
+import "../styles/pages/AboutUs.scss";
 
 const Section = ({ title, content }) => (
   <div className="mb-16">
@@ -29,25 +30,19 @@ const aboutUsContent = [
 
 const AboutUs = () => {
   return (
-    <div className="relative h-full bg-gradient-to-b from-green-100 via-white to-green-50 py-24">
-      <div className="container mx-auto px-6 lg:px-20 text-gray-900 relative z-10">
-        <div className="absolute top-1/3 left-1/4 w-72 h-72 rounded-full bg-green-300 opacity-50 filter blur-2xl"></div>
-        <div className="absolute bottom-1/4 right-1/3 w-96 h-96 rounded-full bg-yellow-300 opacity-70 filter blur-3xl animate-pulse"></div>
+    <div className="about-us">
+      <div className="about-us__container">
+        <div className="about-us__background-circle-1"></div>
+        <div className="about-us__background-circle-2"></div>
 
-        <h1 className="text-6xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-yellow-400 mb-16 transform transition duration-700 hover:scale-110">
-          About Us
-        </h1>
+        <h1 className="about-us__title">About Us</h1>
 
-        <div className="flex flex-col md:flex-row items-center justify-between gap-16">
-          <div className="md:w-1/2 mb-12 md:mb-0 relative z-10">
-            <img
-              src={bdaLogo}
-              alt="BDA Logo"
-              className="w-full h-auto rounded-xl shadow-2xl transition-transform duration-700 hover:rotate-6 hover:scale-110"
-            />
+        <div className="about-us__flex-container">
+          <div className="about-us__logo">
+            <img src={bdaLogo} alt="BDA Logo" />
           </div>
 
-          <div className="md:w-1/2 md:pl-12 relative z-10">
+          <div className="about-us__content">
             {aboutUsContent.map((section, index) => (
               <Section
                 key={index}
@@ -58,8 +53,8 @@ const AboutUs = () => {
           </div>
         </div>
 
-        <div className="mt-16 flex justify-center">
-          <div className="w-40 h-1 bg-gradient-to-r from-green-400 to-yellow-300 rounded-full shadow-xl animate-pulse"></div>
+        <div className="about-us__divider">
+          <div className="about-us__divider__line"></div>
         </div>
       </div>
     </div>

@@ -1,24 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
-export const signInUser = createAsyncThunk(
-  "user/signInUser",
-  async (credentials, { rejectWithValue }) => {
-    try {
-      const fakeUser = await new Promise((resolve) => {
-        setTimeout(() => {
-          resolve({
-            id: 1,
-            name: "John Doe",
-            email: "john.doe@example.com",
-          });
-        }, 1000);
-      });
-      return fakeUser;
-    } catch (error) {
-      return rejectWithValue("Failed to sign in.");
-    }
-  }
-);
+import { createSlice } from "@reduxjs/toolkit";
+import { signInUser } from "./signinSlice";
 
 const initialState = {
   user: null,
@@ -35,16 +16,17 @@ const userSlice = createSlice({
       state.user = null;
       state.error = null;
     },
+    setUserInfo: (state, action) => {
+      state.user = action.payload;
+      state.status = "succeeded";
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(signInUser.pending, (state) => {
-        state.status = "loading";
-        state.error = null;
-      })
       .addCase(signInUser.fulfilled, (state, action) => {
-        state.status = "succeeded";
         state.user = action.payload;
+        state.status = "succeeded";
         state.error = null;
       })
       .addCase(signInUser.rejected, (state, action) => {
@@ -54,7 +36,7 @@ const userSlice = createSlice({
   },
 });
 
-export const { signOut } = userSlice.actions;
+export const { signOut, setUserInfo } = userSlice.actions;
 
 export const selectUser = (state) => state.user.user;
 export const selectUserStatus = (state) => state.user.status;

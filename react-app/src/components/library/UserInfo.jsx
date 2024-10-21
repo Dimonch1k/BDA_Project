@@ -7,7 +7,8 @@ import {
 } from "@ant-design/icons";
 import { Button, Modal, Row, Col, Typography } from "antd";
 import { useState } from "react";
-import { useStateContext } from "../../contexts/ContextProvider";
+import { useDispatch, useSelector } from "react-redux";
+import { signOut } from "../../store/slices/userSlice";
 
 const { Title, Text } = Typography;
 
@@ -40,9 +41,10 @@ const InfoRow = ({
 );
 
 const UserInfo = () => {
-  const { user, logoutUser } = useStateContext();
+  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const user = useSelector((state) => state.user);
 
   const showModal = () => setIsModalOpen(true);
   const handleOk = () => setIsModalOpen(false);
@@ -67,6 +69,10 @@ const UserInfo = () => {
       isPassword: true,
     },
   ];
+
+  const logoutUser = () => {
+    dispatch(signOut());
+  };
 
   return (
     <>
