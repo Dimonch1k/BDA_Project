@@ -71,7 +71,7 @@ namespace ConsoleApp1.Repository
             {
                 using (IDbConnection db = new MySqlConnection(_connectionString))
                 {
-                    return db.Query<Book>("SELECT * FROM books ORDER BY created_at DESC").AsList();
+                    return db.Query<Book>("SELECT * FROM books;").AsList();
                 }
             }
             catch (MySqlException ex)
