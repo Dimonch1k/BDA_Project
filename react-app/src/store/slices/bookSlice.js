@@ -3,8 +3,10 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 export const fetchBooksItems = createAsyncThunk(
   "books/fetchBooks",
   async () => {
-    const response = await fetch("https://fakestoreapi.com/products");
-    if (!response.ok) throw new Error("Failed to fetch books");
+    const response = await fetch("https://146.190.176.10/api/books/allBooks");
+
+    if (!response.ok || response === undefined || response === null)
+      throw new Error("Failed to fetch books");
     const data = await response.json();
     return data;
   }
@@ -21,6 +23,23 @@ export const addBook = createAsyncThunk("books/addBook", async (newBook) => {
   if (!response.ok) throw new Error("Failed to add book");
   return await response.json();
 });
+
+export const addFeedback = createAsyncThunk(
+  "books/addFeedback",
+  async (feedbackData) => {
+    const response = await fetch("/api/feedback", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(feedbackData),
+    });
+
+    if (!response.ok) throw new Error("Failed to add feedback");
+
+    return await response.json();
+  }
+);
 
 const initialState = {
   books: [],

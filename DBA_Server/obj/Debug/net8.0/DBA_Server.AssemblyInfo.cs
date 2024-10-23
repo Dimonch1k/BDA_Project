@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DBA_Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8f36a5715f23067c70fb1cf5ad219368515aea5c")]
 [assembly: System.Reflection.AssemblyProductAttribute("DBA_Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DBA_Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

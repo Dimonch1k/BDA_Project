@@ -2,15 +2,10 @@ import bdaLogo from "../data/images/bda_logo.png";
 import "../styles/pages/AboutUs.scss";
 
 const Section = ({ title, content }) => (
-  <div className="mb-16">
-    <h2 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-yellow-300 mb-8">
-      {title}
-    </h2>
+  <div className="mb-8">
+    <h2 className="section__title">{title}</h2>
     {content.map((paragraph, index) => (
-      <p
-        key={index}
-        className="text-lg text-gray-700 leading-relaxed mt-4 transform transition duration-500 hover:scale-105"
-      >
+      <p key={index} className="section__paragraph">
         {paragraph}
       </p>
     ))}

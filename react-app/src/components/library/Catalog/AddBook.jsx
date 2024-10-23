@@ -31,7 +31,7 @@ const AddBook = () => {
       const url = URL.createObjectURL(
         new Blob([reader.result], { type: file.type })
       );
-      dispatch(addBook({ ...data, image: url }));
+      dispatch(addBook({ ...data, image_url: url }));
       message.success("Book added successfully");
     };
     reader.readAsArrayBuffer(file);
@@ -51,7 +51,7 @@ const AddBook = () => {
       >
         <Formik
           initialValues={{
-            cover_image: null,
+            image: null,
             title: "",
             author: "",
             genre: "",

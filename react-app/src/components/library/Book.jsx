@@ -29,7 +29,7 @@ const Book = ({ book, isFavoriteBook }) => {
   return (
     <div className="book" onClick={() => openBook(book)}>
       <div className="book__img-container">
-        <img src={book.image} alt="book img" className="book__img" />
+        <img src={book.imageUrl} alt="book img" className="book__img" />
       </div>
 
       <div className="p-5 bg-white">
@@ -38,7 +38,7 @@ const Book = ({ book, isFavoriteBook }) => {
           <span>Author:</span> {book.author}
         </p>
         <p className="text-gray-700 mb-3">
-          <span>Genre:</span> {book.category}
+          <span>Genre:</span> {book.genre}
         </p>
         <p className="text-gray-600 text-sm line-clamp-3">{book.description}</p>
 
