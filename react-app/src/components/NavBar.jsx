@@ -23,9 +23,11 @@ const NavBar = () => {
   return (
     <div className="navBar">
       <div className="navBar__content">
-        <NavLink to="/">
-          <img src={logo} alt="logo" className="navBar__logo" />
-        </NavLink>
+        <div className="flex">
+          <NavLink to="/">
+            <img src={logo} alt="logo" className="navBar__logo" />
+          </NavLink>
+        </div>
 
         <div onClick={toggleMenu} className="navBar__toggle">
           {open ? <FaTimes /> : <FaBars />}

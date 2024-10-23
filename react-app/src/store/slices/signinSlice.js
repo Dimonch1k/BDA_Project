@@ -9,13 +9,8 @@ const initialState = {
 export const signInUser = createAsyncThunk(
   "signin/signInUser",
   async (formData, { rejectWithValue }) => {
-    return {
-      name: "John Doe",
-      email: "johndoe@gmail.com",
-      password: "1234",
-    };
     try {
-      const response = await fetch("/api/sign-in", {
+      const response = await fetch("https:/146.190.176.10/api/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

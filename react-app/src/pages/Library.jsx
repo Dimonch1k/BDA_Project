@@ -7,8 +7,8 @@ import { useStateContext } from "../contexts/ContextProvider.js";
 
 const sortingMap = {
   Title: (a, b) => a.title.localeCompare(b.title),
-  Author: (a, b) => a.rating.count > b.rating.count,
-  Genre: (a, b) => a.category.localeCompare(b.category),
+  Author: (a, b) => a.author.localeCompare(b.author),
+  Genre: (a, b) => a.genre.localeCompare(b.genre),
 };
 
 const Library = () => {
@@ -31,8 +31,8 @@ const Library = () => {
       .filter((book) => {
         return (
           book.title.toLowerCase().includes(searchTerm) ||
-          book.rating.count.toLowerCase().includes(searchTerm) ||
-          book.category.toLowerCase().includes(searchTerm)
+          book.author.toLowerCase().includes(searchTerm) ||
+          book.genre.toLowerCase().includes(searchTerm)
         );
       })
       .sort(sortingMap[currentSort]);

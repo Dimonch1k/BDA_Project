@@ -1,72 +1,41 @@
-import {
-  UserOutlined,
-  MailOutlined,
-  LockOutlined,
-  EyeOutlined,
-  EyeInvisibleOutlined,
-} from "@ant-design/icons";
+import { UserOutlined, MailOutlined } from "@ant-design/icons";
 import { Button, Modal, Row, Col, Typography } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { signOut } from "../../store/slices/userSlice";
+import { selectUser, signOut } from "../../store/slices/userSlice";
 
 const { Title, Text } = Typography;
 
-const InfoRow = ({
-  icon,
-  label,
-  value,
-  isPassword,
-  showPassword,
-  toggleShowPassword,
-}) => (
+const InfoRow = ({ icon, label, value }) => (
   <Row gutter={[16, 16]} justify="start" align="middle">
     <Col span={4}>{icon}</Col>
     <Col span={16}>
       <Text strong>{label}:</Text>{" "}
-      <Text className="text-lg text-gray-700">
-        {isPassword && !showPassword ? "******" : value}
-      </Text>
+      <Text className="text-lg text-gray-700">{value}</Text>
     </Col>
-    {isPassword && (
-      <Col span={4}>
-        <Button
-          type="link"
-          icon={showPassword ? <EyeInvisibleOutlined /> : <EyeOutlined />}
-          onClick={toggleShowPassword}
-        />
-      </Col>
-    )}
   </Row>
 );
 
 const UserInfo = () => {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const user = useSelector((state) => state.user);
+  const user = useSelector(selectUser);
+  console.log("User name: ", user?.name);
 
   const showModal = () => setIsModalOpen(true);
   const handleOk = () => setIsModalOpen(false);
   const handleCancel = () => setIsModalOpen(false);
-  const toggleShowPassword = () => setShowPassword(!showPassword);
 
   const userInfo = [
     {
       icon: <UserOutlined style={{ fontSize: "20px", color: "#595959" }} />,
       label: "First Name",
-      value: user?.name || "John",
+      value: user.name,
     },
     {
       icon: <MailOutlined style={{ fontSize: "20px", color: "#595959" }} />,
       label: "Email",
-      value: user?.email || "johnDoe@gmail.com",
-    },
-    {
-      icon: <LockOutlined style={{ fontSize: "20px", color: "#595959" }} />,
-      label: "Password",
-      value: user?.password || "1234",
-      isPassword: true,
+      value: user.email,
     },
   ];
 
@@ -126,9 +95,6 @@ const UserInfo = () => {
                 icon={info.icon}
                 label={info.label}
                 value={info.value}
-                isPassword={info.isPassword}
-                showPassword={showPassword}
-                toggleShowPassword={toggleShowPassword}
               />
             ))}
           </Col>

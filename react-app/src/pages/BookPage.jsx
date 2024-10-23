@@ -8,7 +8,12 @@ import {
   borrowBook,
   selectBorrowedBooks,
 } from "../store/slices/borrowBookSlice";
-import { selectUser } from "../store/slices/userSlice";
+import { fetchUserById, selectUser } from "../store/slices/userSlice";
+import {
+  fetchFeedbacks,
+  submitFeedback,
+  selectFeedbackByBook,
+} from "../store/slices/feedbackSlice";
 
 const { Title, Paragraph } = Typography;
 
@@ -18,27 +23,40 @@ const BookPage = () => {
   const navigate = useNavigate();
   const books = useSelector(selectAllBooks);
   const book = books.find((p) => p.id === Number(id));
-  const borrowedBooks = useSelector(selectBorrowedBooks);
+  console.log(book);
   const user = useSelector(selectUser);
+  const borrowedBooks = useSelector(selectBorrowedBooks);
+  const feedbacks = useSelector((state) => selectFeedbackByBook(state, id));
   const [feedback, setFeedback] = useState("");
   const [rating, setRating] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
-    if (!books.length) {
-      dispatch(fetchBooksItems());
-    }
-  }, [books, dispatch]);
+    if (!books.length) dispatch(fetchBooksItems());
+    if (book) dispatch(fetchFeedbacks(book.id));
+    // if (user) {
+    //   dispatch(fetchUserById(user.id)).then((result) => {
+    //     if (result.meta.requestStatus === "fulfilled") {
+    //       setUserInfo(result.payload);
+    //     }
+    //   });
+    // }
+  }, [books, book, user, dispatch]);
 
-  const handleFeedbackChange = (e) => {
-    setFeedback(e.target.value);
-  };
+  const handleFeedbackChange = (e) => setFeedback(e.target.value);
 
   const handleFeedbackSubmit = (e) => {
     e.preventDefault();
     if (!borrowedBooks.includes(book.id)) {
       message.error("You can only leave feedback after borrowing this book.");
     } else {
+      dispatch(
+        submitFeedback({
+          bookId: book.id,
+          feedback: { rating, message: feedback, userId: user.id },
+        })
+      );
       setFeedback("");
       setRating(0);
       message.success("Feedback submitted successfully.");
@@ -60,25 +78,40 @@ const BookPage = () => {
   };
 
   const handleModalCancel = () => setIsModalOpen(false);
-  if (!book) {
+
+  if (!book || book === undefined || book === null) {
     return <div className="text-center text-red-500">Book not found</div>;
   }
 
   return (
     <div className="book-page">
       <Card className="book-page__card">
-        <img
-          src={book.image}
-          alt={book.title}
-          className="book-page__card__image"
-        />
+        <div className="flex justify-center">
+          <img
+            src={book.imageUrl}
+            alt={book.title}
+            className="book-page__card__image"
+          />
+        </div>
         <div className="book-page__card__content">
           <Title level={1} className="book-page__card__content__title">
             {book.title}
           </Title>
           <Paragraph className="book-page__card__content__paragraph">
-            {book.body}
+            {book.description}
           </Paragraph>
+
+          <div className="book-page__card__ratings">
+            <Rate
+              allowHalf
+              disabled
+              value={Math.round(book.averageRating * 2) / 2}
+            />
+            <span className="book-page__card__total-reviews">
+              ({book.totalReviews} reviews)
+            </span>
+          </div>
+
           <Button
             type="primary"
             className="book-page__card__content__button"
@@ -130,17 +163,20 @@ const BookPage = () => {
             <Title level={2} className="book-page__feedback__title">
               Existing Feedbacks
             </Title>
-            <ul className="list-disc pl-5 text-gray-700">
-              {book.feedback &&
-                book.feedback.map((f, index) => (
-                  <li key={index} className="book-page__feedback__list__item">
-                    <span className="font-medium">{`Feedback ${
-                      index + 1
-                    }:`}</span>{" "}
-                    {f}
+            {/* <ul className="book-page__feedback__list__list">
+              {feedbacks.map((f) => {
+                const feedbackUser =
+                  userInfo && userInfo.id === f.userId ? userInfo : null;
+                return (
+                  <li key={f.id} className="book-page__feedback__list__item">
+                    <span className="font-medium">{`${
+                      feedbackUser ? feedbackUser.name : "Anonymous"
+                    }: `}</span>
+                    {f.message} <Rate allowHalf disabled value={f.rating} />
                   </li>
-                ))}
-            </ul>
+                );
+              })}
+            </ul> */}
           </div>
         </div>
       </Card>

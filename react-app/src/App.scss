@@ -1,7 +1,7 @@
 // Book List && Favorite list
 .book-list,
 .favorite-list {
-  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2
   lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-10;
 }
 
@@ -29,4 +29,42 @@
   display: flex;
   justify-content: center;
   gap: 1rem;
+}
+
+ul,
+ul li {
+  @apply list-none m-0 p-0 overflow-hidden;
+}
+
+img {
+  @apply object-contain;
+}
+
+input:focus {
+  @apply outline-none;
+}
+
+p,
+input {
+  @apply m-0;
+}
+
+button {
+  @apply cursor-pointer border-none bg-white;
+}
+
+details summary {
+  @apply list-none;
+}
+
+.ant-input-wrapper {
+  @apply h-full;
+}
+.ant-input {
+  @apply h-full;
+}
+
+.ant-btn {
+  height: 100% !important;
+  line-height: auto !important;
 }
