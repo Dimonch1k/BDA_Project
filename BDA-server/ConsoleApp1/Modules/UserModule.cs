@@ -48,7 +48,7 @@ namespace ConsoleApp1.Modules
                 {
                     _userService.Register(user);
                     _logger.LogInformation("User {Email} successfully registered.", user.Email);
-                    return HttpStatusCode.OK;
+                    return Response.AsJson(new { message = "User registered successfully." }, HttpStatusCode.OK);
                 }
                 catch (InvalidOperationException ex)
                 {
