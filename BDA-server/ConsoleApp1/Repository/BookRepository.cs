@@ -32,10 +32,10 @@ namespace ConsoleApp1.Repository
                 using (IDbConnection db = new MySqlConnection(_connectionString))
                 {
                     var sql = @"INSERT INTO books 
-                                (title, author, genre, description, imagePath, average_rating, total_reviews, created_at) 
-                                VALUES (@Title, @Author, @Genre, @Description, @imagePath, @AverageRating, @TotalReviews, @CreatedAt)";
+                                (title, author, genre, description, imagePath, averageRating, totalReviews, createdAt) 
+                                VALUES (@title, @author, @genre, @description, @imagePath, @averageRating, @totalReviews, @createdAt)";
                     db.Execute(sql, book);
-                    _logger.LogInformation("Book '{Title}' added successfully.", book.Title);
+                    _logger.LogInformation("Book '{title}' added successfully.", book.title);
                 }
             }
             catch (MySqlException ex)
@@ -131,13 +131,13 @@ namespace ConsoleApp1.Repository
                 using (IDbConnection db = new MySqlConnection(_connectionString))
                 {
                     var sql = @"UPDATE books 
-                                SET title = @Title, 
-                                    author = @Author, 
-                                    genre = @Genre, 
-                                    description = @Description, 
+                                SET title = @title, 
+                                    author = @author, 
+                                    genre = @genre, 
+                                    description = @description, 
                                     imagePath = @imagePath, 
-                                    average_rating = @AverageRating, 
-                                    total_reviews = @TotalReviews 
+                                    averageRating = @averageRating, 
+                                    totalReviews = @totalReviews 
                                 WHERE id = @Id";
                     var rowsAffected = db.Execute(sql, book);
 
@@ -147,7 +147,7 @@ namespace ConsoleApp1.Repository
                         throw new InvalidOperationException("Book does not exist.");
                     }
 
-                    _logger.LogInformation("Book '{Title}' updated successfully.", book.Title);
+                    _logger.LogInformation("Book '{title}' updated successfully.", book.title);
                 }
             }
             catch (MySqlException ex)
@@ -158,14 +158,14 @@ namespace ConsoleApp1.Repository
 
         private void ValidateBook(Book book)
         {
-            if (string.IsNullOrWhiteSpace(book.Title))
+            if (string.IsNullOrWhiteSpace(book.title))
             {
-                throw new ArgumentException("Title is required.", nameof(book.Title));
+                throw new ArgumentException("title is required.", nameof(book.title));
             }
 
-            if (string.IsNullOrWhiteSpace(book.Author))
+            if (string.IsNullOrWhiteSpace(book.author))
             {
-                throw new ArgumentException("Author is required.", nameof(book.Author));
+                throw new ArgumentException("author is required.", nameof(book.author));
             }
 
         }
@@ -175,37 +175,37 @@ namespace ConsoleApp1.Repository
             switch (ex.Number)
             {
                 case 1062: // Duplicate entry
-                    _logger.LogError(ex, "Failed to {Operation} book '{Title}': Duplicate entry.", operation, book.Title);
-                    throw new InvalidOperationException($"A book with the title '{book.Title}' already exists. Please choose a different title.", ex);
+                    _logger.LogError(ex, "Failed to {Operation} book '{title}': Duplicate entry.", operation, book.title);
+                    throw new InvalidOperationException($"A book with the title '{book.title}' already exists. Please choose a different title.", ex);
                 case 1045: // Access denied
-                    _logger.LogError(ex, "Failed to {Operation} book '{Title}': Access denied.", operation, book.Title);
+                    _logger.LogError(ex, "Failed to {Operation} book '{title}': Access denied.", operation, book.title);
                     throw new InvalidOperationException("Access denied. Please check your database credentials.", ex);
                 case 1049: // Unknown database
-                    _logger.LogError(ex, "Failed to {Operation} book '{Title}': Unknown database.", operation, book.Title);
+                    _logger.LogError(ex, "Failed to {Operation} book '{title}': Unknown database.", operation, book.title);
                     throw new InvalidOperationException("The specified database does not exist. Please check your database configuration.", ex);
                 case 2002: // Connection error
-                    _logger.LogError(ex, "Failed to {Operation} book '{Title}': Could not connect to the database server.", operation, book.Title);
+                    _logger.LogError(ex, "Failed to {Operation} book '{title}': Could not connect to the database server.", operation, book.title);
                     throw new InvalidOperationException("Could not connect to the database server. Please check your connection settings.", ex);
                 case 1054: // Unknown column
-                    _logger.LogError(ex, "Failed to {Operation} book '{Title}': One or more columns in the operation do not exist.", operation, book.Title);
+                    _logger.LogError(ex, "Failed to {Operation} book '{title}': One or more columns in the operation do not exist.", operation, book.title);
                     throw new InvalidOperationException("One or more columns in the operation do not exist.", ex);
                 case 1146: // Table doesn't exist
-                    _logger.LogError(ex, "Failed to {Operation} book '{Title}': The specified table does not exist.", operation, book.Title);
+                    _logger.LogError(ex, "Failed to {Operation} book '{title}': The specified table does not exist.", operation, book.title);
                     throw new InvalidOperationException("The specified table does not exist. Please check your database schema.", ex);
                 case 1213: // Deadlock
-                    _logger.LogError(ex, "Failed to {Operation} book '{Title}': A deadlock occurred.", operation, book.Title);
+                    _logger.LogError(ex, "Failed to {Operation} book '{title}': A deadlock occurred.", operation, book.title);
                     throw new InvalidOperationException("A deadlock occurred. Please try again.", ex);
                 case 1366: // Incorrect string value
-                    _logger.LogError(ex, "Failed to {Operation} book '{Title}': Incorrect string value.", operation, book.Title);
+                    _logger.LogError(ex, "Failed to {Operation} book '{title}': Incorrect string value.", operation, book.title);
                     throw new InvalidOperationException("An incorrect string value was entered. Please check your input data.", ex);
                 case 1451: // Foreign key constraint fails (on delete or update)
-                    _logger.LogError(ex, "Failed to {Operation} book '{Title}': Foreign key constraint fails.", operation, book.Title);
+                    _logger.LogError(ex, "Failed to {Operation} book '{title}': Foreign key constraint fails.", operation, book.title);
                     throw new InvalidOperationException("This book is associated with other records and cannot be deleted/updated.", ex);
                 case 1452: // Foreign key constraint fails (on insert)
-                    _logger.LogError(ex, "Failed to {Operation} book '{Title}': Foreign key constraint fails.", operation, book.Title);
+                    _logger.LogError(ex, "Failed to {Operation} book '{title}': Foreign key constraint fails.", operation, book.title);
                     throw new InvalidOperationException("One of the foreign key constraints was violated. Please check related data.", ex);
                 default:
-                    _logger.LogError(ex, "An unexpected error occurred while {Operation} book '{Title}'.", operation, book.Title);
+                    _logger.LogError(ex, "An unexpected error occurred while {Operation} book '{title}'.", operation, book.title);
                     throw new InvalidOperationException("An unexpected error occurred while processing the book.", ex);
             }
         }

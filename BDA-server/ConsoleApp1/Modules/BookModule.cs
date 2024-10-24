@@ -59,12 +59,12 @@ namespace ConsoleApp1.Modules
                     // Add the book to the service (database)
                     _bookService.AddBook(book, file);
 
-                    _logger.LogInformation("Book '{Title}' successfully created with image.", book.Title);
+                    _logger.LogInformation("Book '{title}' successfully created with image.", book.title);
                     return Response.AsJson(book, HttpStatusCode.Created);
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Error while creating book '{Title}'", book.Title);
+                    _logger.LogError(ex, "Error while creating book '{title}'", book.title);
                     return Response.AsJson(new { message = "An error occurred while creating the book.", details = ex.Message }, HttpStatusCode.InternalServerError);
                 }
             });
@@ -89,14 +89,14 @@ namespace ConsoleApp1.Modules
                             return new
                             {
                                 book.Id,
-                                book.Title,
-                                book.Author,
-                                book.Genre,
-                                book.Description,
+                                book.title,
+                                book.author,
+                                book.genre,
+                                book.description,
                                 Image = $"data:image/{Path.GetExtension(filePath).Replace(".", "")};base64,{base64Image}", // Embeds the image as Base64
-                                book.AverageRating,
-                                book.TotalReviews,
-                                book.CreatedAt
+                                book.averageRating,
+                                book.totalReviews,
+                                book.createdAt
                             };
                         }
                         else
@@ -104,14 +104,14 @@ namespace ConsoleApp1.Modules
                             return new
                             {
                                 book.Id,
-                                book.Title,
-                                book.Author,
-                                book.Genre,
-                                book.Description,
+                                book.title,
+                                book.author,
+                                book.genre,
+                                book.description,
                                 Image = "Image not found", // Handle missing images
-                                book.AverageRating,
-                                book.TotalReviews,
-                                book.CreatedAt
+                                book.averageRating,
+                                book.totalReviews,
+                                book.createdAt
                             };
                         }
                     });
@@ -148,14 +148,14 @@ namespace ConsoleApp1.Modules
                         var bookWithImage = new
                         {
                             book.Id,
-                            book.Title,
-                            book.Author,
-                            book.Genre,
-                            book.Description,
+                            book.title,
+                            book.author,
+                            book.genre,
+                            book.description,
                             Image = $"data:image/{Path.GetExtension(filePath).Replace(".", "")};base64,{base64Image}", 
-                            book.AverageRating,
-                            book.TotalReviews,
-                            book.CreatedAt
+                            book.averageRating,
+                            book.totalReviews,
+                            book.createdAt
                         };
 
                         _logger.LogInformation("Book with ID {Id} retrieved successfully.", id);
@@ -167,14 +167,14 @@ namespace ConsoleApp1.Modules
                         {
 
                             book.Id,
-                            book.Title,
-                            book.Author,
-                            book.Genre,
-                            book.Description,
+                            book.title,
+                            book.author,
+                            book.genre,
+                            book.description,
                             Image = "Image not found", 
-                            book.AverageRating,
-                            book.TotalReviews,
-                            book.CreatedAt
+                            book.averageRating,
+                            book.totalReviews,
+                            book.createdAt
                         };
 
                         _logger.LogWarning("Image for book with ID {Id} not found.", id);

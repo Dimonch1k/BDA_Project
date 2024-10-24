@@ -27,32 +27,32 @@ namespace ConsoleApp1.Service
 
             try
             {
-                _logger.LogInformation("Creating a new post with Title: {Title}, AuthorId: {AuthorId}", post.Title, post.AuthorId);
+                _logger.LogInformation("Creating a new post with title: {title}, authorId: {authorId}", post.title, post.authorId);
 
                 // Check for the presence of the author
-                var author = _userRepository.GetUserById(post.AuthorId);
+                var author = _userRepository.GetUserById(post.authorId);
                 if (author == null)
                 {
-                    _logger.LogWarning("Author with ID {AuthorId} does not exist. Cannot create post.", post.AuthorId);
-                    throw new InvalidOperationException("Author does not exist.");
+                    _logger.LogWarning("author with ID {authorId} does not exist. Cannot create post.", post.authorId);
+                    throw new InvalidOperationException("author does not exist.");
                 }
 
                 _postRepository.CreatePost(post);
-                _logger.LogInformation("Post '{Title}' created successfully.", post.Title);
+                _logger.LogInformation("Post '{title}' created successfully.", post.title);
             }
             catch (InvalidOperationException ex)
             {
-                _logger.LogError(ex, "Invalid operation while creating post '{Title}'.", post?.Title);
+                _logger.LogError(ex, "Invalid operation while creating post '{title}'.", post?.title);
                 throw;
             }
             catch (ArgumentException ex)
             {
-                _logger.LogError(ex, "Argument exception while creating post '{Title}'.", post?.Title);
+                _logger.LogError(ex, "Argument exception while creating post '{title}'.", post?.title);
                 throw;
             }
             catch (Exception ex)
             {
-                _logger.LogCritical(ex, "An unexpected error occurred while creating post '{Title}'.", post?.Title);
+                _logger.LogCritical(ex, "An unexpected error occurred while creating post '{title}'.", post?.title);
                 throw new ApplicationException("An error occurred while creating the post.", ex);
             }
         }
@@ -75,7 +75,7 @@ namespace ConsoleApp1.Service
                 }
                 else
                 {
-                    _logger.LogInformation("Post '{Title}' retrieved successfully.", post.Title);
+                    _logger.LogInformation("Post '{title}' retrieved successfully.", post.title);
                 }
                 return post;
             }

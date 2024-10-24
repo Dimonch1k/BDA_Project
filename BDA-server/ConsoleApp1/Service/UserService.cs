@@ -30,7 +30,7 @@ namespace ConsoleApp1.Service
                 user.Password = HashPassword(user.Password);
                 user.PositiveRating = 0; // Default rating
                 user.NegativeRating = 0; // Default rating
-                user.CreatedAt = DateTime.UtcNow; // Set creation date
+                user.createdAt = DateTime.UtcNow; // Set creation date
 
                 _userRepository.CreateUser(user);
                 _logger.LogInformation("User '{Email}' registered successfully.", user.Email);

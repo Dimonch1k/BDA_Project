@@ -36,22 +36,22 @@ namespace ConsoleApp1.Modules
                 try
                 {
                     _postService.CreatePost(post);
-                    _logger.LogInformation("Post '{Title}' successfully created.", post.Title);
+                    _logger.LogInformation("Post '{title}' successfully created.", post.title);
                     return HttpStatusCode.Created;
                 }
                 catch (InvalidOperationException ex)
                 {
-                    _logger.LogError(ex, "Conflict while creating post '{Title}'", post.Title);
+                    _logger.LogError(ex, "Conflict while creating post '{title}'", post.title);
                     return Response.AsJson(new { message = ex.Message }, HttpStatusCode.Conflict);
                 }
                 catch (ArgumentException ex)
                 {
-                    _logger.LogError(ex, "Invalid data when creating post '{Title}'", post.Title);
+                    _logger.LogError(ex, "Invalid data when creating post '{title}'", post.title);
                     return Response.AsJson(new { message = ex.Message }, HttpStatusCode.BadRequest);
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Error while creating post '{Title}'", post.Title);
+                    _logger.LogError(ex, "Error while creating post '{title}'", post.title);
                     return Response.AsJson(new { message = "An error occurred while creating the post.", details = ex.Message }, HttpStatusCode.InternalServerError);
                 }
             });

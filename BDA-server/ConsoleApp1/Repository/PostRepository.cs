@@ -34,9 +34,9 @@ namespace ConsoleApp1.Repository
             {
                 using (IDbConnection db = new MySqlConnection(_connectionString))
                 {
-                    var sql = "INSERT INTO posts (title, content, author_id) VALUES (@Title, @Content, @AuthorId)";
+                    var sql = "INSERT INTO posts (title, content, author_id) VALUES (@title, @Content, @authorId)";
                     db.Execute(sql, post);
-                    _logger.LogInformation("Post '{Title}' created successfully by Author ID {AuthorId}.", post.Title, post.AuthorId);
+                    _logger.LogInformation("Post '{title}' created successfully by author ID {authorId}.", post.title, post.authorId);
                 }
             }
             catch (MySqlException ex)
@@ -45,31 +45,31 @@ namespace ConsoleApp1.Repository
                 switch (ex.Number)
                 {
                     case 1452: // Cannot add or update a child row: a foreign key constraint fails
-                        _logger.LogError(ex, "Failed to create post '{Title}': Author does not exist.", post.Title);
-                        throw new InvalidOperationException("Author does not exist.", ex);
+                        _logger.LogError(ex, "Failed to create post '{title}': author does not exist.", post.title);
+                        throw new InvalidOperationException("author does not exist.", ex);
                     case 1062: // Duplicate entry
-                        _logger.LogError(ex, "Failed to create post '{Title}': Duplicate entry.", post.Title);
+                        _logger.LogError(ex, "Failed to create post '{title}': Duplicate entry.", post.title);
                         throw new InvalidOperationException("A post with this title already exists.", ex);
                     case 1045: // Access denied
-                        _logger.LogError(ex, "Failed to create post '{Title}': Access denied.", post.Title);
+                        _logger.LogError(ex, "Failed to create post '{title}': Access denied.", post.title);
                         throw new InvalidOperationException("Access denied. Please check your database credentials.", ex);
                     case 1049: // Unknown database
-                        _logger.LogError(ex, "Failed to create post '{Title}': Unknown database.", post.Title);
+                        _logger.LogError(ex, "Failed to create post '{title}': Unknown database.", post.title);
                         throw new InvalidOperationException("The specified database does not exist.", ex);
                     case 2002: // Connection error (e.g. can't connect to server)
-                        _logger.LogError(ex, "Failed to create post '{Title}': Could not connect to the database server.", post.Title);
+                        _logger.LogError(ex, "Failed to create post '{title}': Could not connect to the database server.", post.title);
                         throw new InvalidOperationException("Could not connect to the database server. Please check your connection settings.", ex);
                     case 1054: // Unknown column
-                        _logger.LogError(ex, "Failed to create post '{Title}': One or more columns in the insert statement do not exist.", post.Title);
+                        _logger.LogError(ex, "Failed to create post '{title}': One or more columns in the insert statement do not exist.", post.title);
                         throw new InvalidOperationException("One or more columns in the insert statement do not exist.", ex);
                     case 1146: // Table doesn't exist
-                        _logger.LogError(ex, "Failed to create post '{Title}': The specified table does not exist.", post.Title);
+                        _logger.LogError(ex, "Failed to create post '{title}': The specified table does not exist.", post.title);
                         throw new InvalidOperationException("The specified table does not exist.", ex);
                     case 1213: // Deadlock
-                        _logger.LogError(ex, "Failed to create post '{Title}': A deadlock occurred.", post.Title);
+                        _logger.LogError(ex, "Failed to create post '{title}': A deadlock occurred.", post.title);
                         throw new InvalidOperationException("A deadlock occurred. Please try again.", ex);
                     default:
-                        _logger.LogError(ex, "An unexpected error occurred while creating post '{Title}'.", post.Title);
+                        _logger.LogError(ex, "An unexpected error occurred while creating post '{title}'.", post.title);
                         throw new InvalidOperationException("An unexpected error occurred while creating the post.", ex);
                 }
             }
@@ -133,16 +133,16 @@ namespace ConsoleApp1.Repository
 
         private void ValidatePost(Post post)
         {
-            if (string.IsNullOrWhiteSpace(post.Title))
+            if (string.IsNullOrWhiteSpace(post.title))
             {
-                _logger.LogWarning("Post validation failed: Title is required.");
-                throw new ArgumentException("Title is required.", nameof(post.Title));
+                _logger.LogWarning("Post validation failed: title is required.");
+                throw new ArgumentException("title is required.", nameof(post.title));
             }
 
-            if (post.Title.Length > 255)
+            if (post.title.Length > 255)
             {
-                _logger.LogWarning("Post validation failed: Title cannot exceed 255 characters.");
-                throw new ArgumentException("Title cannot exceed 255 characters.", nameof(post.Title));
+                _logger.LogWarning("Post validation failed: title cannot exceed 255 characters.");
+                throw new ArgumentException("title cannot exceed 255 characters.", nameof(post.title));
             }
 
             if (string.IsNullOrWhiteSpace(post.Content))
@@ -151,10 +151,10 @@ namespace ConsoleApp1.Repository
                 throw new ArgumentException("Content is required.", nameof(post.Content));
             }
 
-            if (post.AuthorId <= 0)
+            if (post.authorId <= 0)
             {
-                _logger.LogWarning("Post validation failed: Invalid Author ID.");
-                throw new ArgumentException("Invalid Author ID.", nameof(post.AuthorId));
+                _logger.LogWarning("Post validation failed: Invalid author ID.");
+                throw new ArgumentException("Invalid author ID.", nameof(post.authorId));
             }
         }
     }

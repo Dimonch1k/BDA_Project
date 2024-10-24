@@ -33,7 +33,7 @@ namespace ConsoleApp1.Repository
                 using (IDbConnection db = new MySqlConnection(_connectionString))
                 {
                     var sql = "INSERT INTO users (name, email, password, positive_rating, negative_rating, created_at) " +
-                              "VALUES (@Name, @Email, @Password, @PositiveRating, @NegativeRating, @CreatedAt)";
+                              "VALUES (@Name, @Email, @Password, @PositiveRating, @NegativeRating, @createdAt)";
                     db.Execute(sql, user);
                     _logger.LogInformation("User '{Email}' created successfully.", user.Email);
                 }

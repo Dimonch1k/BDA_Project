@@ -87,7 +87,7 @@ namespace ConsoleApp1.Modules
                             user.Email,
                             user.PositiveRating,
                             user.NegativeRating,
-                            user.CreatedAt
+                            user.createdAt
                         }, HttpStatusCode.OK);
                     }
 

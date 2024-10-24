@@ -19,7 +19,7 @@ namespace ConsoleApp1.Entity
 
         public int Rating { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime createdAt { get; set; } = DateTime.UtcNow;
 
         public bool IsModerated { get; set; } = false;
 

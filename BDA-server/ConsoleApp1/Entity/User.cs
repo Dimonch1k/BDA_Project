@@ -24,6 +24,6 @@ namespace ConsoleApp1.Entity
 
         public int PositiveRating { get; set; } = 0;
         public int NegativeRating { get; set; } = 0;
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime createdAt { get; set; } = DateTime.UtcNow;
     }
 }

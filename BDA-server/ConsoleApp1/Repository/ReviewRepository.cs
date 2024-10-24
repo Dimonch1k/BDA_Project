@@ -33,7 +33,7 @@ namespace ConsoleApp1.Repository
                 using (IDbConnection db = new MySqlConnection(_connectionString))
                 {
                     var sql = "INSERT INTO reviews (user_id, book_id, review_text, rating, created_at, is_moderated) " +
-                              "VALUES (@UserId, @BookId, @ReviewText, @Rating, @CreatedAt, @IsModerated)";
+                              "VALUES (@UserId, @BookId, @ReviewText, @Rating, @createdAt, @IsModerated)";
                     db.Execute(sql, review);
                     _logger.LogInformation("Review added successfully for User ID {UserId} and Book ID {BookId}.", review.UserId, review.BookId);
                 }
@@ -145,7 +145,7 @@ namespace ConsoleApp1.Repository
                 using (IDbConnection db = new MySqlConnection(_connectionString))
                 {
                     var sql = "UPDATE reviews SET user_id = @UserId, book_id = @BookId, review_text = @ReviewText, " +
-                              "rating = @Rating, created_at = @CreatedAt, is_moderated = @IsModerated WHERE id = @Id";
+                              "rating = @Rating, created_at = @createdAt, is_moderated = @IsModerated WHERE id = @Id";
                     int rowsAffected = db.Execute(sql, review);
                     if (rowsAffected > 0)
                     {

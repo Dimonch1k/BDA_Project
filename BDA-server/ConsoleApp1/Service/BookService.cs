@@ -36,21 +36,21 @@ namespace ConsoleApp1.Service
                 }
                 // Add book to the repository
                 _bookRepository.AddBook(book);
-                _logger.LogInformation("Book '{Title}' added successfully.", book.Title);
+                _logger.LogInformation("Book '{title}' added successfully.", book.title);
             }
             catch (ArgumentException ex)
             {
-                _logger.LogError(ex, "Validation failed while adding book '{Title}'.", book.Title);
+                _logger.LogError(ex, "Validation failed while adding book '{title}'.", book.title);
                 throw;
             }
             catch (InvalidOperationException ex)
             {
-                _logger.LogError(ex, "Operation failed while adding book '{Title}'.", book.Title);
+                _logger.LogError(ex, "Operation failed while adding book '{title}'.", book.title);
                 throw;
             }
             catch (Exception ex)
             {
-                _logger.LogCritical(ex, "An unexpected error occurred while adding book '{Title}'.", book.Title);
+                _logger.LogCritical(ex, "An unexpected error occurred while adding book '{title}'.", book.title);
                 throw new ApplicationException("An error occurred while adding the book.", ex);
             }
         }
@@ -120,8 +120,8 @@ namespace ConsoleApp1.Service
             }
 
             // Preserve ratings and reviews count (in case they are updated from reviews, not manually)
-            book.AverageRating = existingBook.AverageRating;
-            book.TotalReviews = existingBook.TotalReviews;
+            book.averageRating = existingBook.averageRating;
+            book.totalReviews = existingBook.totalReviews;
 
             try
             {
@@ -152,21 +152,21 @@ namespace ConsoleApp1.Service
 
             //if (!Uri.IsWellFormedUriString(book.imagePath, UriKind.Absolute))
             //{
-            //    _logger.LogWarning("Invalid imagePath for book '{Title}'.", book.Title);
+            //    _logger.LogWarning("Invalid imagePath for book '{title}'.", book.title);
             //    throw new ArgumentException("Invalid Image URL.", nameof(book.imagePath));
             //}
 
-            // Additional checks for fields like AverageRating or TotalReviews
-            if (book.AverageRating < 0 || book.AverageRating > 5)
+            // Additional checks for fields like averageRating or totalReviews
+            if (book.averageRating < 0 || book.averageRating > 5)
             {
-                _logger.LogWarning("Invalid rating {AverageRating} for book '{Title}'.", book.AverageRating, book.Title);
-                throw new ArgumentException("Average Rating must be between 0 and 5.", nameof(book.AverageRating));
+                _logger.LogWarning("Invalid rating {averageRating} for book '{title}'.", book.averageRating, book.title);
+                throw new ArgumentException("Average Rating must be between 0 and 5.", nameof(book.averageRating));
             }
 
-            if (book.TotalReviews < 0)
+            if (book.totalReviews < 0)
             {
-                _logger.LogWarning("Invalid total reviews count {TotalReviews} for book '{Title}'.", book.TotalReviews, book.Title);
-                throw new ArgumentException("Total reviews must be non-negative.", nameof(book.TotalReviews));
+                _logger.LogWarning("Invalid total reviews count {totalReviews} for book '{title}'.", book.totalReviews, book.title);
+                throw new ArgumentException("Total reviews must be non-negative.", nameof(book.totalReviews));
             }
         }
     }
