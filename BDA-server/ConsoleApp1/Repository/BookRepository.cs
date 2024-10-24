@@ -32,7 +32,7 @@ namespace ConsoleApp1.Repository
                 using (IDbConnection db = new MySqlConnection(_connectionString))
                 {
                     var sql = @"INSERT INTO books 
-                                (title, author, genre, description, image_Path, year, average_rating, total_reviews, created_at) 
+                                (title, author, genre, description, imagePath, year, average_rating, total_reviews, created_at) 
                                 VALUES (@Title, @Author, @Genre, @Description, @imagePath, @Year, @AverageRating, @TotalReviews, @CreatedAt)";
                     db.Execute(sql, book);
                     _logger.LogInformation("Book '{Title}' added successfully.", book.Title);
