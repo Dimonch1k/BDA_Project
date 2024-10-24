@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Nancy;
 using Nancy.ModelBinding;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 
 namespace ConsoleApp1.Modules
 {
@@ -11,6 +12,8 @@ namespace ConsoleApp1.Modules
     {
         private readonly IBookService _bookService;
         private readonly ILogger<BookModule> _logger;
+
+       
 
         public BookModule(IBookService bookService, ILogger<BookModule> logger) : base("/api/books")
         {
@@ -20,7 +23,10 @@ namespace ConsoleApp1.Modules
             // Create a book
             Post("/addBook", parameters =>
             {
-                _logger.LogInformation("Request to create a new book.");
+                _logger.LogInformation("Request to create a new book with image.");
+
+                // Parsing
+                var files = this.Request.Files;
                 var book = this.Bind<Book>();
 
                 // Model validation
@@ -30,22 +36,31 @@ namespace ConsoleApp1.Modules
                     _logger.LogWarning("Validation error when creating book: {Errors}", string.Join(", ", validationErrors));
                     return Response.AsJson(new { errors = validationErrors }, HttpStatusCode.BadRequest);
                 }
+                if (!files.Any())  
+                {
+                    _logger.LogWarning("No image file provided.");
+                    return Response.AsJson(new { message = "Image file is required." }, HttpStatusCode.BadRequest);
+                }
 
                 try
                 {
-                    _bookService.AddBook(book);
-                    _logger.LogInformation("Book '{Title}' successfully created.", book.Title);
+                    // Save the image to local storage
+                    var file = files.First(); // Assuming one image per book
+                    string uploadsFolder = "/Projects/booksImages"; // Local storage path
+                    Directory.CreateDirectory(uploadsFolder); // Ensure the directory exists
+
+                    string fileExtension = Path.GetExtension(file.Name);
+                    string fileName = $"{Guid.NewGuid()}{fileExtension}";
+                    string filePath = Path.Combine(uploadsFolder, fileName);
+
+                    // Set the imagePath to the saved file path
+                    book.imagePath = filePath;
+
+                    // Add the book to the service (database)
+                    _bookService.AddBook(book, file);
+
+                    _logger.LogInformation("Book '{Title}' successfully created with image.", book.Title);
                     return Response.AsJson(book, HttpStatusCode.Created);
-                }
-                catch (InvalidOperationException ex)
-                {
-                    _logger.LogError(ex, "Conflict while creating book '{Title}'", book.Title);
-                    return Response.AsJson(new { message = ex.Message }, HttpStatusCode.Conflict);
-                }
-                catch (ArgumentException ex)
-                {
-                    _logger.LogError(ex, "Invalid data when creating book '{Title}'", book.Title);
-                    return Response.AsJson(new { message = ex.Message }, HttpStatusCode.BadRequest);
                 }
                 catch (Exception ex)
                 {
@@ -54,6 +69,7 @@ namespace ConsoleApp1.Modules
                 }
             });
 
+
             // Get all books
             Get("/allBooks", parameters =>
             {
@@ -61,11 +77,47 @@ namespace ConsoleApp1.Modules
                 try
                 {
                     var books = _bookService.GetAllBooks();
-                    _logger.LogInformation("Books retrieved successfully.");
-                    _logger.LogInformation(string.Join(Environment.NewLine, books.Select(book =>
-                    $"Id: {book.Id}, Title: {book.Title}, Author: {book.Author}, ImageUrl: {book.ImageUrl}")));
 
-                    return Response.AsJson(books, HttpStatusCode.OK);
+                    // Load the images for each book
+                    var bookWithImages = books.Select(book =>
+                    {
+                        string filePath = book.imagePath; // Full file path stored in the database
+                        if (File.Exists(filePath))
+                        {
+                            byte[] imageBytes = File.ReadAllBytes(filePath);
+                            string base64Image = Convert.ToBase64String(imageBytes);
+                            return new
+                            {
+                                book.Id,
+                                book.Title,
+                                book.Author,
+                                book.Genre,
+                                book.Description,
+                                Image = $"data:image/{Path.GetExtension(filePath).Replace(".", "")};base64,{base64Image}", // Embeds the image as Base64
+                                book.AverageRating,
+                                book.TotalReviews,
+                                book.CreatedAt
+                            };
+                        }
+                        else
+                        {
+                            return new
+                            {
+                                book.Id,
+                                book.Title,
+                                book.Author,
+                                book.Genre,
+                                book.Description,
+                                Image = "Image not found", // Handle missing images
+                                book.AverageRating,
+                                book.TotalReviews,
+                                book.CreatedAt
+                            };
+                        }
+                    });
+
+                    _logger.LogInformation("Books retrieved successfully.");
+                    return Response.AsJson(bookWithImages, HttpStatusCode.OK);
                 }
                 catch (Exception ex)
                 {
@@ -87,8 +139,47 @@ namespace ConsoleApp1.Modules
                         _logger.LogWarning("Book with ID {Id} not found.", id);
                         return Response.AsJson(new { message = "Book not found." }, HttpStatusCode.NotFound);
                     }
-                    _logger.LogInformation("Book with ID {Id} retrieved successfully.", id);
-                    return Response.AsJson(book, HttpStatusCode.OK);
+
+                    string filePath = book.imagePath;
+                    if (File.Exists(filePath))
+                    {
+                        byte[] imageBytes = File.ReadAllBytes(filePath);
+                        string base64Image = Convert.ToBase64String(imageBytes);
+                        var bookWithImage = new
+                        {
+                            book.Id,
+                            book.Title,
+                            book.Author,
+                            book.Genre,
+                            book.Description,
+                            Image = $"data:image/{Path.GetExtension(filePath).Replace(".", "")};base64,{base64Image}", 
+                            book.AverageRating,
+                            book.TotalReviews,
+                            book.CreatedAt
+                        };
+
+                        _logger.LogInformation("Book with ID {Id} retrieved successfully.", id);
+                        return Response.AsJson(bookWithImage, HttpStatusCode.OK);
+                    }
+                    else
+                    {
+                        var bookWithoutImage = new
+                        {
+
+                            book.Id,
+                            book.Title,
+                            book.Author,
+                            book.Genre,
+                            book.Description,
+                            Image = "Image not found", 
+                            book.AverageRating,
+                            book.TotalReviews,
+                            book.CreatedAt
+                        };
+
+                        _logger.LogWarning("Image for book with ID {Id} not found.", id);
+                        return Response.AsJson(bookWithoutImage, HttpStatusCode.OK);
+                    }
                 }
                 catch (ArgumentException ex)
                 {

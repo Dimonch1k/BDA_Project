@@ -1,6 +1,7 @@
 ﻿using ConsoleApp1.Entity;
 using ConsoleApp1.Repository;
 using Microsoft.Extensions.Logging;
+using Nancy;
 using System.ComponentModel.DataAnnotations;
 
 namespace ConsoleApp1.Service
@@ -18,7 +19,7 @@ namespace ConsoleApp1.Service
             _logger = logger;
         }
 
-        public void AddBook(Book book)
+        public void AddBook(Book book, HttpFile file)
         {
             if (book == null)
             {
@@ -29,7 +30,10 @@ namespace ConsoleApp1.Service
             {
                 // Validate the Book model
                 ValidateBook(book);
-
+                using (var fileStream = new FileStream(book.imagePath, FileMode.Create))
+                {
+                    file.Value.CopyTo(fileStream);
+                }
                 // Add book to the repository
                 _bookRepository.AddBook(book);
                 _logger.LogInformation("Book '{Title}' added successfully.", book.Title);
@@ -151,10 +155,10 @@ namespace ConsoleApp1.Service
                 throw new ArgumentException("Year must be a valid year.", nameof(book.Year));
             }
 
-            if (!Uri.IsWellFormedUriString(book.ImageUrl, UriKind.Absolute))
+            if (!Uri.IsWellFormedUriString(book.imagePath, UriKind.Absolute))
             {
-                _logger.LogWarning("Invalid ImageUrl for book '{Title}'.", book.Title);
-                throw new ArgumentException("Invalid Image URL.", nameof(book.ImageUrl));
+                _logger.LogWarning("Invalid imagePath for book '{Title}'.", book.Title);
+                throw new ArgumentException("Invalid Image URL.", nameof(book.imagePath));
             }
 
             // Additional checks for fields like AverageRating or TotalReviews

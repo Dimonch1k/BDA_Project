@@ -33,7 +33,7 @@ namespace ConsoleApp1.Repository
                 {
                     var sql = @"INSERT INTO books 
                                 (title, author, genre, description, image_url, year, average_rating, total_reviews, created_at) 
-                                VALUES (@Title, @Author, @Genre, @Description, @ImageUrl, @Year, @AverageRating, @TotalReviews, @CreatedAt)";
+                                VALUES (@Title, @Author, @Genre, @Description, @imagePath, @Year, @AverageRating, @TotalReviews, @CreatedAt)";
                     db.Execute(sql, book);
                     _logger.LogInformation("Book '{Title}' added successfully.", book.Title);
                 }
@@ -71,7 +71,7 @@ namespace ConsoleApp1.Repository
             {
                 using (IDbConnection db = new MySqlConnection(_connectionString))
                 {
-                    return db.Query<Book>("SELECT id, title, author, genre, description, imageUrl, averageRating, totalReviews, createdAt FROM books;").AsList();
+                    return db.Query<Book>("SELECT id, title, author, genre, description, imagePath, averageRating, totalReviews, createdAt FROM books;").AsList();
                 }
             }
             catch (MySqlException ex)
@@ -135,7 +135,7 @@ namespace ConsoleApp1.Repository
                                     author = @Author, 
                                     genre = @Genre, 
                                     description = @Description, 
-                                    image_url = @ImageUrl, 
+                                    image_url = @imagePath, 
                                     year = @Year, 
                                     average_rating = @AverageRating, 
                                     total_reviews = @TotalReviews 

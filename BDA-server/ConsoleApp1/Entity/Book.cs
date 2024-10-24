@@ -27,7 +27,7 @@ namespace ConsoleApp1.Entity
 
         public required string Description { get; set; }
 
-        public required string ImageUrl { get; set; }
+        public required string imagePath { get; set; }
 
         public decimal AverageRating { get; set; } = 0;
 
