@@ -149,11 +149,6 @@ namespace ConsoleApp1.Service
                 throw new ArgumentException($"Book validation failed: {errors}");
             }
 
-            if (book.Year < 0 || book.Year > DateTime.UtcNow.Year)
-            {
-                _logger.LogWarning("Invalid year {Year} for book '{Title}'.", book.Year, book.Title);
-                throw new ArgumentException("Year must be a valid year.", nameof(book.Year));
-            }
 
             //if (!Uri.IsWellFormedUriString(book.imagePath, UriKind.Absolute))
             //{

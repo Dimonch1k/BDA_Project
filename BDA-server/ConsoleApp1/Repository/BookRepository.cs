@@ -32,8 +32,8 @@ namespace ConsoleApp1.Repository
                 using (IDbConnection db = new MySqlConnection(_connectionString))
                 {
                     var sql = @"INSERT INTO books 
-                                (title, author, genre, description, imagePath, year, average_rating, total_reviews, created_at) 
-                                VALUES (@Title, @Author, @Genre, @Description, @imagePath, @Year, @AverageRating, @TotalReviews, @CreatedAt)";
+                                (title, author, genre, description, imagePath, average_rating, total_reviews, created_at) 
+                                VALUES (@Title, @Author, @Genre, @Description, @imagePath, @AverageRating, @TotalReviews, @CreatedAt)";
                     db.Execute(sql, book);
                     _logger.LogInformation("Book '{Title}' added successfully.", book.Title);
                 }
@@ -135,8 +135,7 @@ namespace ConsoleApp1.Repository
                                     author = @Author, 
                                     genre = @Genre, 
                                     description = @Description, 
-                                    image_url = @imagePath, 
-                                    year = @Year, 
+                                    imagePath = @imagePath, 
                                     average_rating = @AverageRating, 
                                     total_reviews = @TotalReviews 
                                 WHERE id = @Id";
@@ -169,10 +168,6 @@ namespace ConsoleApp1.Repository
                 throw new ArgumentException("Author is required.", nameof(book.Author));
             }
 
-            if (book.Year < 0 || book.Year > DateTime.UtcNow.Year)
-            {
-                throw new ArgumentException("Year must be a valid year.", nameof(book.Year));
-            }
         }
 
         private void HandleMySqlException(MySqlException ex, Book book, string operation)

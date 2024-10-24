@@ -23,7 +23,6 @@ namespace ConsoleApp1.Entity
 
         [Required(ErrorMessage = "Year is required.")]
         [Range(0, 9999, ErrorMessage = "Year must be a valid year.")]
-        public int Year { get; set; }
 
         public required string Description { get; set; }
 
