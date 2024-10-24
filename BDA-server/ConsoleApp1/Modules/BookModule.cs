@@ -270,10 +270,7 @@ namespace ConsoleApp1.Modules
                 }
             }
 
-            if (book.Year < 0 || book.Year > DateTime.UtcNow.Year)
-            {
-                results.Add("Year must be a valid year.");
-            }
+        
 
             return results;
         }
