@@ -155,11 +155,11 @@ namespace ConsoleApp1.Service
                 throw new ArgumentException("Year must be a valid year.", nameof(book.Year));
             }
 
-            if (!Uri.IsWellFormedUriString(book.imagePath, UriKind.Absolute))
-            {
-                _logger.LogWarning("Invalid imagePath for book '{Title}'.", book.Title);
-                throw new ArgumentException("Invalid Image URL.", nameof(book.imagePath));
-            }
+            //if (!Uri.IsWellFormedUriString(book.imagePath, UriKind.Absolute))
+            //{
+            //    _logger.LogWarning("Invalid imagePath for book '{Title}'.", book.Title);
+            //    throw new ArgumentException("Invalid Image URL.", nameof(book.imagePath));
+            //}
 
             // Additional checks for fields like AverageRating or TotalReviews
             if (book.AverageRating < 0 || book.AverageRating > 5)
