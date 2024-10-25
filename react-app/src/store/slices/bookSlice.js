@@ -13,7 +13,7 @@ export const fetchBooksItems = createAsyncThunk(
 );
 
 export const addBook = createAsyncThunk("books/addBook", async (newBook) => {
-  const response = await fetch("/api/books", {
+  const response = await fetch("https://146.190.176.10/api/books/addBook", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

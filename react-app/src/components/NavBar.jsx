@@ -46,7 +46,7 @@ const NavBar = () => {
             </li>
           ))}
 
-          {user ? (
+          {user.name && user.email ? (
             <UserInfo />
           ) : (
             <NavLink to="/library/sign-in">

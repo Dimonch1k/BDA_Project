@@ -29,7 +29,7 @@ const Book = ({ book, isFavoriteBook }) => {
   return (
     <div className="book" onClick={() => openBook(book)}>
       <div className="book__img-container">
-        <img src={book.imageUrl} alt="book img" className="book__img" />
+        <img src={book.image} alt={`${book.image}`} className="book__img" />
       </div>
 
       <div className="p-5 bg-white">

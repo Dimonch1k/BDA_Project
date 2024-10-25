@@ -23,19 +23,58 @@ const AddBook = () => {
   const showModal = () => setIsModalOpen(true);
   const handleCancel = () => setIsModalOpen(false);
 
+  // const handleAddBook = (data) => {
+  //   const file = data.image;
+
+  //   const reader = new FileReader();
+  //   reader.onload = () => {
+  //     const url = URL.createObjectURL(
+  //       new Blob([reader.result], { type: file.type })
+  //     );
+  //     console.log(url);
+  //     dispatch(addBook({ ...data, image: url }));
+  //     message.success("Book added successfully");
+  //   };
+  //   reader.readAsArrayBuffer(file);
+  // };
+
   const handleAddBook = (data) => {
     const file = data.image;
 
+    // Validate file extension
+    const validExtensions = ["image/png", "image/jpeg", "image/jpg"];
+    if (!validExtensions.includes(file.type)) {
+      message.error("Invalid file type. Only PNG, JPG, and JPEG are allowed.");
+      return;
+    }
+
+    // Process the image file
     const reader = new FileReader();
     reader.onload = () => {
-      const url = URL.createObjectURL(
-        new Blob([reader.result], { type: file.type })
-      );
-      dispatch(addBook({ ...data, image_url: url }));
+      // Convert the image to base64
+      const base64Image = reader.result;
+      console.log(base64Image);
+
+      // Dispatch the action to add the book with the image in base64
+      dispatch(addBook({ ...data, image: base64Image }));
       message.success("Book added successfully");
     };
-    reader.readAsArrayBuffer(file);
+
+    reader.readAsDataURL(file);
   };
+
+  // const handleAddBook = (data) => {
+  //   const file = data.image[0]; // Assuming the image is the first file in the input
+
+  //   dispatch(addBook({ ...data, image: file }))
+  //     .then(() => {
+  //       message.success("Book added successfully");
+  //       setIsModalOpen(false);
+  //     })
+  //     .catch((error) => {
+  //       message.error("Failed to add book: " + error.message);
+  //     });
+  // };
 
   return (
     <>

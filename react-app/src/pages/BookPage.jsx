@@ -23,14 +23,12 @@ const BookPage = () => {
   const navigate = useNavigate();
   const books = useSelector(selectAllBooks);
   const book = books.find((p) => p.id === Number(id));
-  console.log(book);
   const user = useSelector(selectUser);
   const borrowedBooks = useSelector(selectBorrowedBooks);
   const feedbacks = useSelector((state) => selectFeedbackByBook(state, id));
   const [feedback, setFeedback] = useState("");
   const [rating, setRating] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
     if (!books.length) dispatch(fetchBooksItems());

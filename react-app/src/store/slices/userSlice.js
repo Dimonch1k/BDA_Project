@@ -1,27 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { signInUser } from "./signinSlice";
-import axios from "axios";
-
-const apiClient = axios.create({
-  baseURL: "https://146.190.176.10/api",
-});
-
-export const fetchUserById = createAsyncThunk(
-  "user/fetchUserById",
-  async (userId, { rejectWithValue }) => {
-    try {
-      const response = await apiClient.get(`/users/${userId}`);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response?.data || "Failed to fetch user");
-    }
-  }
-);
 
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    user: null,
+    user: { name: null, email: null },
     status: "idle",
     error: null,
   },
@@ -45,18 +28,6 @@ const userSlice = createSlice({
         state.error = null;
       })
       .addCase(signInUser.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload;
-      })
-      .addCase(fetchUserById.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(fetchUserById.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.status = "succeeded";
-        state.error = null;
-      })
-      .addCase(fetchUserById.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });

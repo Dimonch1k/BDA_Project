@@ -6,6 +6,7 @@ import InputSign from "../components/library/Catalog/InputSign";
 import { useDispatch, useSelector } from "react-redux";
 import { signUpUser, resetSignUp } from "../store/slices/signupSlice";
 import { signUpInputs } from "../data/dummy";
+import { message } from "antd";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ const SignUp = () => {
   useEffect(() => {
     if (success) {
       setFormData({ name: "", email: "", password: "", confirmPassword: "" });
+      message.success("The user registered successfully!");
       setTimeout(() => {
         navigate("/library/sign-in");
       }, 3000);

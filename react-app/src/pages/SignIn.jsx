@@ -6,11 +6,12 @@ import InputSign from "../components/library/Catalog/InputSign";
 import { useDispatch, useSelector } from "react-redux";
 import { signInUser, resetSignIn } from "../store/slices/signinSlice";
 import { setUserInfo } from "../store/slices/userSlice";
+import { message } from "antd";
 
 const SignIn = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { success, error } = useSelector((state) => state.signin);
+  const { success, error, user } = useSelector((state) => state.user);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -21,21 +22,35 @@ const SignIn = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(signInUser(formData));
+
+    try {
+      const resultAction = await dispatch(signInUser(formData));
+
+      if (signInUser.fulfilled.match(resultAction)) {
+        const { name, email } = resultAction.payload;
+        dispatch(setUserInfo({ name, email }));
+        message.success("You have signed in successfully!");
+        navigate("/library");
+      } else {
+        message.error("Sign in failed. Please check your credentials.");
+      }
+    } catch (err) {
+      message.error("An error occurred during sign-in.");
+    }
   };
 
   useEffect(() => {
-    if (success) {
-      const userData = success;
-      dispatch(setUserInfo(userData));
-      navigate("/library/");
+    if (user && success) {
+      const { name, email } = user;
+      dispatch(setUserInfo({ name, email }));
     }
+
     return () => {
       dispatch(resetSignIn());
     };
-  }, [success, dispatch, navigate]);
+  }, [success, user, dispatch]);
 
   return (
     <div className="sign-in">

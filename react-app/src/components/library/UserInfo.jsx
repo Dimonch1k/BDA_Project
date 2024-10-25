@@ -20,7 +20,6 @@ const UserInfo = () => {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const user = useSelector(selectUser);
-  console.log("User name: ", user?.name);
 
   const showModal = () => setIsModalOpen(true);
   const handleOk = () => setIsModalOpen(false);
